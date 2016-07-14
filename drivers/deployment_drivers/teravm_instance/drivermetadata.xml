@@ -1,0 +1,7 @@
+<Driver Description="Deploy TeraVm Instance" MainClass="driver.DeployTeraVM" Name="Deploy TeraVm Instance" Version="0.1.6">
+    <Layout>
+        <Category Name="App Management">
+            <Command Description="" DisplayName="Deploy" Name="Deploy" Tags="allow_shared" />
+        </Category>
+    </Layout>
+</Driver>
