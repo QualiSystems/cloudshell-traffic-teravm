@@ -1,13 +1,13 @@
-import json
-from debug_utils import debugger
-
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
-from uuid import uuid4
+from cloudshell.shell.core.driver_bootstrap import DriverBootstrap
+from cloudshell.traffic.teravm.app_deployment_handler import AppDeploymentHandler
 
 
 class DeployTeraVM(ResourceDriverInterface):
     def __init__(self):
-        pass
+        bootstrap = DriverBootstrap()
+        bootstrap.initialize()
+        self.handler = AppDeploymentHandler()
 
     def cleanup(self):
         pass
@@ -16,12 +16,11 @@ class DeployTeraVM(ResourceDriverInterface):
         pass
 
     def Deploy(self, context, Name=None):
-        debugger.attach_debugger()
-        fake_app = {
-            'vm_name': 'lolwhocarez',
-            'vm_uuid': str(uuid4()),
-            'cloud_provider_resource_name': 'vcenter9'
-        }
+        """ Deploys a TeraVM entity - a controller or a test module
 
-        return json.dumps(fake_app)
+        :type context: cloudshell.shell.core.driver_context.ResourceCommandContext
+        :type Name: str
+        """
+        self.handler.deploy(context, Name)
+
 
