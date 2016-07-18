@@ -1,6 +1,6 @@
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
 from cloudshell.shell.core.driver_bootstrap import DriverBootstrap
-from cloudshell.traffic.teravm.app_deployment_handler import AppDeploymentHandler
+from cloudshell.traffic.teravm.deployment.app_deployment_handler import AppDeploymentHandler
 
 
 class DeployTeraVM(ResourceDriverInterface):
@@ -21,6 +21,6 @@ class DeployTeraVM(ResourceDriverInterface):
         :type context: cloudshell.shell.core.driver_context.ResourceCommandContext
         :type Name: str
         """
-        self.handler.deploy(context, Name)
+        return self.handler.deploy(context, Name)
 
 

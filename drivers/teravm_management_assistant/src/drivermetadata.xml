@@ -1,7 +1,11 @@
 <Driver Description="TeraVM Management Assistant" MainClass="driver.TeraVMManagementAssistant" Name="TeraVM Management Assistant" Version="0.1.6">
     <Layout>
         <Category Name="Deployment">
-            <Command Description="" DisplayName="Deploy TeraVM Entity" Name="deploy_tvm" Tags="allow_shared" />
+            <Command Description="" DisplayName="Deploy TeraVM Entity" Name="deploy_tvm" Tags="allow_unreserved">
+                <Parameters>
+	                <Parameter Name="request" DisplayName="Request" Type="String" Mandatory="True" />
+	            </Parameters>
+            </Command>
         </Category>
     </Layout>
 </Driver>
