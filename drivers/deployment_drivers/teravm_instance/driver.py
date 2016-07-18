@@ -1,6 +1,7 @@
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
 from cloudshell.shell.core.driver_bootstrap import DriverBootstrap
 from cloudshell.traffic.teravm.deployment.app_deployment_handler import AppDeploymentHandler
+from cloudshell.shell.core.context_utils import context_from_args
 
 
 class DeployTeraVM(ResourceDriverInterface):
@@ -12,9 +13,11 @@ class DeployTeraVM(ResourceDriverInterface):
     def cleanup(self):
         pass
 
+    @context_from_args
     def initialize(self, context):
         pass
 
+    @context_from_args
     def Deploy(self, context, Name=None):
         """ Deploys a TeraVM entity - a controller or a test module
 
