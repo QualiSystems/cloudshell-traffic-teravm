@@ -1,5 +1,5 @@
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
-from cloudshell.traffic.teravm.management_assistant.tvm_ma import TeraVMManagementAssistantHandler
+from cloudshell.traffic.teravm.management_assistant.tvm_ma import TeraVMManagementAssistantDriverHandler
 from cloudshell.shell.core.driver_bootstrap import DriverBootstrap
 from cloudshell.shell.core.context_utils import context_from_args
 
@@ -8,7 +8,7 @@ class TeraVMManagementAssistant(ResourceDriverInterface):
     def __init__(self):
         bootstrap = DriverBootstrap()
         bootstrap.initialize()
-        self.handler = TeraVMManagementAssistantHandler()
+        self.handler = TeraVMManagementAssistantDriverHandler()
 
     def cleanup(self):
         pass

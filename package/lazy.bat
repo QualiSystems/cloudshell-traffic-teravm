@@ -1,0 +1,1 @@
+c:\work\7.0\batch\lazy %*

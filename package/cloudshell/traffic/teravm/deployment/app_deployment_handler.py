@@ -4,9 +4,7 @@ from uuid import uuid4
 
 from cloudshell.api.cloudshell_api import InputNameValue
 from cloudshell.traffic.teravm.common.cloudshell_helper import get_cloudshell_session
-from cloudshell.traffic.teravm.models.tvm_request_model import TVMRequest
-
-from debug_utils import debugger
+from cloudshell.traffic.teravm.models.tvm_request import TvmAppRequest
 
 
 class AppDeploymentHandler:
@@ -19,17 +17,18 @@ class AppDeploymentHandler:
         :type context: cloudshell.shell.core.driver_context.ResourceCommandContext
         :type Name: str
         """
-        debugger.attach_debugger()
         api = get_cloudshell_session(context)
         # get connectors details
-        request = TVMRequest(context, api)
-        api.ExecuteCommand(context.reservation.reservation_id,
-                           context.resource.attributes['TVM MA Name'],
-                           "Resource",
-                           "deploy_tvm",
-                           [InputNameValue(Name='request',
-                                           Value=request)]
-                           )
+        request = TvmAppRequest.from_context(context, api).to_string()
+        deploy_tvm_output = api.ExecuteCommand(context.reservation.reservation_id,
+                                               context.resource.attributes['TVM MA Name'],
+                                               "Resource",
+                                               "deploy_tvm",
+                                               [InputNameValue(Name='request',
+                                                               Value=request)])
+
+        # deploy_result = json.loads(deploy_tvm_output)
+        # deploy_result.vm_name, deploy_result.vm_uuid
         fake_app = {
             'vm_name': 'lolwhocarez',
             'vm_uuid': str(uuid4()),
