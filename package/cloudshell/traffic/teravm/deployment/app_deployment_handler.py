@@ -27,13 +27,13 @@ class AppDeploymentHandler:
                                                [InputNameValue(Name='request',
                                                                Value=request)])
 
-        # deploy_result = json.loads(deploy_tvm_output)
-        # deploy_result.vm_name, deploy_result.vm_uuid
-        fake_app = {
-            'vm_name': 'lolwhocarez',
-            'vm_uuid': str(uuid4()),
+        deployed_vm = json.loads(deploy_tvm_output)
+
+        app = {
+            'vm_name': deployed_vm['vm_name'],
+            'vm_uuid': deployed_vm['vm_uuid'],
             'cloud_provider_resource_name': context.resource.attributes['vCenter Name']
         }
 
-        return json.dumps(fake_app)
+        return json.dumps(app)
 

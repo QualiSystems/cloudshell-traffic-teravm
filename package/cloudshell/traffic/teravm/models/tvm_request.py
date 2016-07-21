@@ -6,7 +6,7 @@ from cloudshell.traffic.teravm.common import i18n as c, error_messages
 class TvmAppRequest:
     """ Gets attributes and other data about request from the deploying app """
     def __init__(self, vcenter_address, vcenter_user, vcenter_password, vcenter_holding_network, requested_model,
-                 number_of_interfaces=2):
+                 number_of_interfaces=2, tvm_type=None):
 
         self.vcenter_address = vcenter_address
         self.vcenter_user = vcenter_user
@@ -14,6 +14,7 @@ class TvmAppRequest:
         self.vcenter_holding_network = vcenter_holding_network
         self.model = requested_model
         self.number_of_interfaces = number_of_interfaces
+        self.tvm_type = tvm_type
 
     @classmethod
     def from_context(cls, context, api):
@@ -31,12 +32,15 @@ class TvmAppRequest:
     def from_dict(cls, request_dict):
         if c.KEY_NUMBER_OF_INTERFACES not in request_dict:
             request_dict[c.KEY_NUMBER_OF_INTERFACES] = 2
+        if c.ATTRIBUTE_NAME_TVM_TYPE not in request_dict:
+            request_dict[c.ATTRIBUTE_NAME_TVM_TYPE] = c.DEFAULT_TVM_TYPE
         return cls(request_dict[c.KEY_VCENTER_ADDRESS],
                    request_dict[c.ATTRIBUTE_NAME_USER],
                    request_dict[c.ATTRIBUTE_NAME_PASSWORD],
                    request_dict[c.ATTRIBUTE_NAME_HOLDING_NETWORK],
                    request_dict[c.KEY_MODEL],
-                   request_dict[c.KEY_NUMBER_OF_INTERFACES])
+                   request_dict[c.KEY_NUMBER_OF_INTERFACES],
+                   request_dict[c.ATTRIBUTE_NAME_TVM_TYPE])
 
     def __str__(self):
         return json.dumps(self.to_dict())
@@ -51,7 +55,8 @@ class TvmAppRequest:
             c.ATTRIBUTE_NAME_PASSWORD: self.vcenter_password,
             c.ATTRIBUTE_NAME_HOLDING_NETWORK: self.vcenter_holding_network,
             c.KEY_MODEL: self.model,
-            c.KEY_NUMBER_OF_INTERFACES: self.number_of_interfaces
+            c.KEY_NUMBER_OF_INTERFACES: self.number_of_interfaces,
+            c.ATTRIBUTE_NAME_TVM_TYPE: self.tvm_type
         }
 
 

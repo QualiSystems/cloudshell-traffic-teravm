@@ -14,9 +14,17 @@ ATTRIBUTE_NAME_ESXI_HOST = 'ESXi Host'
 ATTRIBUTE_NAME_DATASTORE = 'Datastore'
 ATTRIBUTE_NAME_MANAGEMENT_NETWORK = 'Management Network'
 ATTRIBUTE_NAME_COMMS_NETWORK = 'TeraVM Comms Default Network'
+ATTRIBUTE_NAME_TVM_TYPE = 'TeraVM Test Module Type'
+
 
 # ----------------- DICT KEYS --------------------#
+
 KEY_VCENTER_ADDRESS = 'vcenter_address'
 KEY_MODEL = 'model'
 KEY_LOGICAL_RESOURCE = 'logicalResource'
 KEY_NUMBER_OF_INTERFACES = 'number_of_interfaces'
+
+
+# ---------------- DEFAULTS ----------------------#
+
+DEFAULT_TVM_TYPE = 'TVM-1'

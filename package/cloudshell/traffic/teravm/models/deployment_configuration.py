@@ -42,7 +42,7 @@ class DeploymentConfiguration:
 
     def _build_test_module_config(self):
         self._config = {
-            'vmuTypes': 'tvm',
+            'vmuTypes': self._request.tvm_type,
             'tvmCount': 1,
             'tvmServer': self._request.vcenter_address,
             'tvmUser': self._request.vcenter_user,
