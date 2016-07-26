@@ -20,14 +20,14 @@ class AppDeploymentHandler:
         api = get_cloudshell_session(context)
         # get connectors details
         request = TvmAppRequest.from_context(context, api).to_string()
-        deploy_tvm_output = api.ExecuteCommand(context.reservation.reservation_id,
+        deploy_result = api.ExecuteCommand(context.reservation.reservation_id,
                                                context.resource.attributes['TVM MA Name'],
                                                "Resource",
                                                "deploy_tvm",
                                                [InputNameValue(Name='request',
                                                                Value=request)])
 
-        deployed_vm = json.loads(deploy_tvm_output)
+        deployed_vm = json.loads(deploy_result.Output)
 
         app = {
             'vm_name': deployed_vm['vm_name'],

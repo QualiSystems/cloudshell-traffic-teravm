@@ -15,6 +15,8 @@ ATTRIBUTE_NAME_DATASTORE = 'Datastore'
 ATTRIBUTE_NAME_MANAGEMENT_NETWORK = 'Management Network'
 ATTRIBUTE_NAME_COMMS_NETWORK = 'TeraVM Comms Default Network'
 ATTRIBUTE_NAME_TVM_TYPE = 'TeraVM Test Module Type'
+ATTRIBUTE_NAME_VM_LOCATION = 'VM Location'
+ATTRIBUTE_NAME_DEFAULT_DATACENTER = 'Default Datacenter'
 
 
 # ----------------- DICT KEYS --------------------#

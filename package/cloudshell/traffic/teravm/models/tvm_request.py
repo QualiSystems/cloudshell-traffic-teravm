@@ -5,13 +5,13 @@ from cloudshell.traffic.teravm.common import i18n as c, error_messages
 
 class TvmAppRequest:
     """ Gets attributes and other data about request from the deploying app """
-    def __init__(self, vcenter_address, vcenter_user, vcenter_password, vcenter_holding_network, requested_model,
+    def __init__(self, vcenter_address, vcenter_user, vcenter_password, vcenter_default_datacenter, requested_model,
                  number_of_interfaces=2, tvm_type=None):
 
         self.vcenter_address = vcenter_address
         self.vcenter_user = vcenter_user
         self.vcenter_password = vcenter_password
-        self.vcenter_holding_network = vcenter_holding_network
+        self.vcenter_default_datacenter = vcenter_default_datacenter
         self.model = requested_model
         self.number_of_interfaces = number_of_interfaces
         self.tvm_type = tvm_type
@@ -37,7 +37,7 @@ class TvmAppRequest:
         return cls(request_dict[c.KEY_VCENTER_ADDRESS],
                    request_dict[c.ATTRIBUTE_NAME_USER],
                    request_dict[c.ATTRIBUTE_NAME_PASSWORD],
-                   request_dict[c.ATTRIBUTE_NAME_HOLDING_NETWORK],
+                   request_dict[c.ATTRIBUTE_NAME_DEFAULT_DATACENTER],
                    request_dict[c.KEY_MODEL],
                    request_dict[c.KEY_NUMBER_OF_INTERFACES],
                    request_dict[c.ATTRIBUTE_NAME_TVM_TYPE])
@@ -53,7 +53,7 @@ class TvmAppRequest:
             c.KEY_VCENTER_ADDRESS: self.vcenter_address,
             c.ATTRIBUTE_NAME_USER: self.vcenter_user,
             c.ATTRIBUTE_NAME_PASSWORD: self.vcenter_password,
-            c.ATTRIBUTE_NAME_HOLDING_NETWORK: self.vcenter_holding_network,
+            c.ATTRIBUTE_NAME_DEFAULT_DATACENTER: self.vcenter_default_datacenter,
             c.KEY_MODEL: self.model,
             c.KEY_NUMBER_OF_INTERFACES: self.number_of_interfaces,
             c.ATTRIBUTE_NAME_TVM_TYPE: self.tvm_type

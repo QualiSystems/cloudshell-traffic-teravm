@@ -54,7 +54,7 @@ class DeploymentConfiguration:
             'tvmOva': './ova/'
         }
         for index in range(self._request.number_of_interfaces):
-                self._config["tvmNetsByNic[%s]" % str(index+1)] = self._request.vcenter_holding_network
+                self._config["tvmNetsByNic[%s]" % str(index+1)] = self._tvmma.holding_network
 
     def __str__(self):
         return json.dumps(self._config)
