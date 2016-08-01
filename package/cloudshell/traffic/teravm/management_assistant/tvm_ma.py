@@ -39,7 +39,7 @@ class TeraVMManagementAssistantDriverHandler:
 
         app = json.dumps({
             'vm_name': deployed_vm_name,
-            'vm_uuid': vm.config.instanceUuid
+            'vm_uuid': vm.config.uuid
         })
 
         if tvm_ma_model.vm_location != '':

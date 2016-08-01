@@ -2,6 +2,7 @@
 
 CONTROLLER_MODEL = 'TeraVM Controller'
 TEST_MODULE_MODEL = 'TeraVM Test Module'
+TEST_MODULE_PORT_MODEL = 'TeraVM Interface'
 
 
 # ----------------- ATTRIBUTES -------------------#

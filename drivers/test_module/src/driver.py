@@ -1,9 +1,16 @@
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
+from cloudshell.shell.core.context_utils import context_from_args
+from cloudshell.shell.core.driver_bootstrap import DriverBootstrap
+from cloudshell.traffic.teravm.test_module.driver_handler import TestModuleHandler
+
+from debug_utils import debugger
 
 
-class TeraVMController(ResourceDriverInterface):
+class TeraVMTestModuleDriver(ResourceDriverInterface):
     def __init__(self):
-        pass
+        bootstrap = DriverBootstrap()
+        bootstrap.initialize()
+        self.handler = TestModuleHandler()
 
     def cleanup(self):
         pass
@@ -11,9 +18,13 @@ class TeraVMController(ResourceDriverInterface):
     def initialize(self, context):
         pass
 
-    def run_test(self, context, test_name):
-        return 'Dummy executing test_name ' + test_name
+    @context_from_args
+    def get_inventory(self, context):
+        """ Returns device resource, sub-resources and attributes
 
-    def stop_test(self, context):
-        return 'Dummy stopping tests'
+        :type context: cloudshell.shell.core.driver_context.AutoLoadCommandContext
+        :rtype: cloudshell.shell.core.driver_context.AutoLoadDetails
+        """
+        return self.handler.get_inventory(context=context)
+
 
