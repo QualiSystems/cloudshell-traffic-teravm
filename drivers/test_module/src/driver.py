@@ -3,8 +3,6 @@ from cloudshell.shell.core.context_utils import context_from_args
 from cloudshell.shell.core.driver_bootstrap import DriverBootstrap
 from cloudshell.traffic.teravm.test_module.driver_handler import TestModuleHandler
 
-from debug_utils import debugger
-
 
 class TeraVMTestModuleDriver(ResourceDriverInterface):
     def __init__(self):
@@ -25,6 +23,15 @@ class TeraVMTestModuleDriver(ResourceDriverInterface):
         :type context: cloudshell.shell.core.driver_context.AutoLoadCommandContext
         :rtype: cloudshell.shell.core.driver_context.AutoLoadDetails
         """
-        return self.handler.get_inventory(context=context)
+        return self.handler.get_inventory(context)
+
+    @context_from_args
+    def connect_child_resources(self, context):
+        """ Takes connectors to app and reconnects them
+
+        :type context: cloudshell.shell.core.driver_context.ResourceCommandContext
+        :rtype: str
+        """
+        return self.handler.connect_child_resources(context)
 
 

@@ -1,7 +1,10 @@
 <Driver Description="TeraVM Test Module" MainClass="driver.TeraVMTestModuleDriver" Name="TeraVM Test Module" Version="0.1.6">
     <Layout>
     	<Category Name="Traffic">
-	        <Command Description="" DisplayName="get_inventory" Name="Autoload" Tags="" />
+	        <Command Description="" Name="get_inventory" DisplayName="Autoload" Tags="" />
 	    </Category>
+		<Category Name="Hidden Commands1">
+			<Command Description="" Name="connect_child_resources" DisplayName="Connect Child Resources" Tags="" />
+		</Category>
     </Layout>
 </Driver>

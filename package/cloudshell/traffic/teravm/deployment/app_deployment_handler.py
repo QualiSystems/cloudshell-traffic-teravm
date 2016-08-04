@@ -5,6 +5,7 @@ from uuid import uuid4
 from cloudshell.api.cloudshell_api import InputNameValue
 from cloudshell.traffic.teravm.common.cloudshell_helper import get_cloudshell_session
 from cloudshell.traffic.teravm.models.tvm_request import TvmAppRequest
+from debug_utils import debugger
 
 
 class AppDeploymentHandler:
@@ -17,8 +18,8 @@ class AppDeploymentHandler:
         :type context: cloudshell.shell.core.driver_context.ResourceCommandContext
         :type Name: str
         """
+        debugger.attach_debugger()
         api = get_cloudshell_session(context)
-        # get connectors details
         request = TvmAppRequest.from_context(context, api).to_string()
         deploy_result = api.ExecuteCommand(context.reservation.reservation_id,
                                                context.resource.attributes['TVM MA Name'],

@@ -50,7 +50,6 @@ class DeploymentConfiguration:
             'tvmHost[0]': self._tvmma.esxi_host,
             'tvmDatastore[0]': self._tvmma.datastore,
             'tvmNetsByNic[0]': self._tvmma.comms_network,
-            'tvmNetsByNic[1]': self._tvmma.management_network,
             'tvmOva': './ova/'
         }
         for index in range(self._request.number_of_interfaces):

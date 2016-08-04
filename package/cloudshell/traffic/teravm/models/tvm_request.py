@@ -18,18 +18,31 @@ class TvmAppRequest:
 
     @classmethod
     def from_context(cls, context, api):
+        """
+        :type context: cloudshell.shell.core.driver_context.ResourceCommandContext
+        :rtype: TvmAppRequest
+        """
         app = AppDetails(context, api)
         request = app.attributes
         request[c.KEY_MODEL] = app.model
+        request[c.KEY_NUMBER_OF_INTERFACES] = 2 if len(app.connections)<2 else len(app.connections)
         return cls.from_dict(request)
 
     @classmethod
     def from_string(cls, jsonstr):
+        """
+        :type jsonstr: str
+        :rtype: TvmAppRequest
+        """
         request = json.loads(jsonstr)
         return cls.from_dict(request)
 
     @classmethod
     def from_dict(cls, request_dict):
+        """
+        :type request_dict: dict
+        :rtype: TvmAppRequest
+        """
         if c.KEY_NUMBER_OF_INTERFACES not in request_dict:
             request_dict[c.KEY_NUMBER_OF_INTERFACES] = 2
         if c.ATTRIBUTE_NAME_TVM_TYPE not in request_dict:
@@ -63,14 +76,20 @@ class TvmAppRequest:
 class AppDetails:
     def __init__(self, context, api):
         """
-
-        :type context: todo
+        :type context: cloudshell.shell.core.context.ResourceCommandContext
         :type api: cloudshell.api.cloudshell_api.CloudShellAPISession
         """
         deployment = context.resource
+        app_name = self._get_app_name(deployment)
+        reservation_details = _get_reservation_details(api, context)
+        self._connections = self._get_app_connections(reservation_details, app_name)
         self._attributes = self._get_vcenter_attributes(api, deployment)
         self._attributes.update(deployment.attributes)
         self._app = json.loads(deployment.app_context.app_request_json)
+
+    @staticmethod
+    def _get_app_name(deployment):
+        return json.loads(deployment.app_context.app_request_json)['name']
 
     @staticmethod
     def _get_vcenter_attributes(api, deployment):
@@ -82,6 +101,16 @@ class AppDetails:
         result[c.ATTRIBUTE_NAME_PASSWORD] = api.DecryptPassword(result[c.ATTRIBUTE_NAME_PASSWORD]).Value
         return result
 
+    @staticmethod
+    def _get_app_connections(reservation_details, app_name):
+        """
+        :type reservation_details: cloudshell.api.cloudshell_api.ReservationDescriptionInfo
+        :type app_name: str
+        :rtype: cloudshell.api.cloudshell_api.Connector
+        """
+        connections = reservation_details.Connectors
+        return [conn for conn in connections if conn.Source == app_name or conn.Target == app_name]
+
     @property
     def attributes(self):
         return self._attributes
@@ -89,3 +118,15 @@ class AppDetails:
     @property
     def model(self):
         return self._app['logicalResource']['model']
+
+    @property
+    def connections(self):
+        return self._connections
+
+
+def _get_reservation_details(api, context):
+    """
+    :rtype: cloudshell.api.cloudshell_api.ReservationDescriptionInfo
+    """
+    resid = context.reservation.reservation_id
+    return api.GetReservationDetails(resid).ReservationDescription
