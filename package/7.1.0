@@ -1,0 +1,6 @@
+Collecting cloudshell-automation-api
+Installing collected packages: cloudshell-automation-api
+  Found existing installation: cloudshell-automation-api 7.0.0.132
+    Uninstalling cloudshell-automation-api-7.0.0.132:
+      Successfully uninstalled cloudshell-automation-api-7.0.0.132
+Successfully installed cloudshell-automation-api-7.1.0.34

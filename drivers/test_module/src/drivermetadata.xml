@@ -3,7 +3,7 @@
     	<Category Name="Traffic">
 	        <Command Description="" Name="get_inventory" DisplayName="Autoload" Tags="" />
 	    </Category>
-		<Category Name="Hidden Commands1">
+		<Category Name="Hidden Commands">
 			<Command Description="" Name="connect_child_resources" DisplayName="Connect Child Resources" Tags="" />
 		</Category>
     </Layout>

@@ -1,12 +1,15 @@
 <Driver Description="TeraVM Controller" MainClass="driver.TeraVMController" Name="TeraVM Controller" Version="0.1.6">
     <Layout>
     	<Category Name="Traffic">
-	        <Command Description="" Name="run_test" DisplayName="Run Test" Tags="" >
-	            <Parameters>
-	                <Parameter Name="test_name" DisplayName="Test Name" Type="String" Mandatory="True" />
+	        <Command Description="" Name="load_configuration" DisplayName="Load Configuration" Tags="" >
+				<Parameters>
+	                <Parameter Name="test_location" DisplayName="Test Location" Type="String" Mandatory="True" />
 	            </Parameters>
 	        </Command>
+			<Command Description="" Name="run_test" DisplayName="Run Test" Tags="" />
 	        <Command Description="" Name="stop_test" DisplayName="Stop Test" Tags="" />
-	    </Category>
+			<Command Description="" Name="get_inventory" DisplayName="Autoload" Tags="" />
+			<Command Description="" Name="run_custom_command" DisplayName="Run Custom Command" Tags="" />
+		</Category>
     </Layout>
 </Driver>

@@ -4,6 +4,8 @@
       <w>attribs</w>
       <w>datacenter</w>
       <w>jsonstr</w>
+      <w>paramiko</w>
+      <w>pyvmomi</w>
       <w>tvmma</w>
       <w>vmuid</w>
       <w>vnic</w>

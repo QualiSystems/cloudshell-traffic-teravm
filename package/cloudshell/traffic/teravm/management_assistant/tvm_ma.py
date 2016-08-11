@@ -9,6 +9,8 @@ from cloudshell.traffic.teravm.models.tvm_request import TvmAppRequest
 from cloudshell.traffic.teravm.models.tvm_ma_model import TVMMAModel
 import cloudshell.traffic.teravm.common.error_messages as e
 from cloudshell.traffic.teravm.common.path_utilties import combine_path
+from cloudshell.traffic.teravm.common.cloudshell_helper import get_cloudshell_session
+from cloudshell.traffic.teravm.common import i18n as c
 
 
 class TeraVMManagementAssistantDriverHandler:
@@ -19,11 +21,26 @@ class TeraVMManagementAssistantDriverHandler:
     def deploy_tvm(context, request):
         app_request = TvmAppRequest.from_dict(json.loads(request))
         tvm_ma_model = TVMMAModel.from_context(context)
-        conf = DeploymentConfiguration(app_request, tvm_ma_model).to_dict()
 
-        mac = TVMManagerController(tvm_ma_model.host_address)
-        mac.set_configuration(conf)
-        deploy_output = mac.deploy()
+        api = get_cloudshell_session(context)
+
+        pool_id = '{0}_{1}_{2}'.format(app_request.vcenter_address, context.resource.name, app_request.model)
+
+        start_request = {
+            'isolation': 'Exclusive',
+            'reservationId': context.reservation.reservation_id,
+            'poolId': pool_id,
+            'ownerId': context.reservation.owner_user,
+            'type': 'NextAvailableNumericFromRange',
+            'requestedRange': {'Start': 3, 'End': 4000}
+        }
+        starting_index = api.CheckoutFromPool(json.dumps(start_request)).Items[0]
+
+        conf = DeploymentConfiguration(app_request, tvm_ma_model, starting_index).to_dict()
+
+        ma = TVMManagerController(tvm_ma_model.host_address)
+        ma.set_configuration(conf)
+        deploy_output = ma.deploy()
 
         try:
             deployed_vm_name = re.findall('Calling Object: (.*) Action: PowerOnVM', deploy_output)[0]
@@ -39,7 +56,9 @@ class TeraVMManagementAssistantDriverHandler:
 
         app = json.dumps({
             'vm_name': deployed_vm_name,
-            'vm_uuid': vm.config.uuid
+            'vm_uuid': vm.config.uuid,
+            c.KEY_STARTING_INDEX: starting_index,
+            c.KEY_INDEX_POOL: pool_id
         })
 
         if tvm_ma_model.vm_location != '':

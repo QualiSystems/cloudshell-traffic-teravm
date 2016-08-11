@@ -33,5 +33,3 @@ class TeraVMTestModuleDriver(ResourceDriverInterface):
         :rtype: str
         """
         return self.handler.connect_child_resources(context)
-
-

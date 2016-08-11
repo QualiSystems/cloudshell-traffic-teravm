@@ -7,6 +7,8 @@ from cloudshell.shell.core.driver_context import AutoLoadDetails, AutoLoadResour
 from cloudshell.traffic.teravm.common.cloudshell_helper import get_cloudshell_session
 from cloudshell.api.cloudshell_api import SetConnectorRequest
 from cloudshell.traffic.teravm.common.parsing_utilities import to_int_or_maxint
+from cloudshell.traffic.teravm.common.vsphere_helper import get_vsphere_credentials
+from debug_utils import debugger
 
 
 class TestModuleHandler:
@@ -16,33 +18,39 @@ class TestModuleHandler:
     @staticmethod
     def get_inventory(context):
         api = get_cloudshell_session(context, 'Global')
-        vsphere = pyVmomiService(SmartConnect, Disconnect, task_waiter=None)
 
         resource = api.GetResourceDetails(context.resource.fullname)
         vmuid = resource.VmDetails.UID
-        vcenter_name = resource.VmDetails.CloudProviderFullName
-        vcenter = api.GetResourceDetails(vcenter_name)
-        vcenter_address = vcenter.Address
-        vcenter_attr = {attribute.Name:attribute.Value for attribute in vcenter.ResourceAttributes}
-        vsphere_user = vcenter_attr[c.ATTRIBUTE_NAME_USER]
-        vsphere_password = api.DecryptPassword(vcenter_attr[c.ATTRIBUTE_NAME_PASSWORD]).Value
-
+        vcenter_address, vsphere_password, vsphere_user = get_vsphere_credentials(api, resource)
+        vsphere = pyVmomiService(SmartConnect, Disconnect, task_waiter=None)
         si = vsphere.connect(vcenter_address, vsphere_user, vsphere_password)
         vm = vsphere.get_vm_by_uuid(si, vmuid)
 
         resources = []
         attributes = []
+        address = ''
         idx = 1
         for device in vm.config.hardware.device:
             if isinstance(device, vim.vm.device.VirtualEthernetCard):
                 idx += 1
                 port_name = c.COMMS_INTERFACE if idx == 2 else c.INTERFACE + str(idx)
+                if idx == 2:
+                    address = device.macAddress
                 resources.append(AutoLoadResource(c.TEST_MODULE_PORT_MODEL, port_name, str(idx)))
                 attributes.append(AutoLoadAttribute(attribute_name=c.ATTRIBUTE_REQUESTED_VNIC_NAME,
                                                     attribute_value=device.deviceInfo.label,
                                                     relative_address=str(idx)))
+        api.UpdateResourceAddress(resource.Name, address)
+        api.SetResourceLiveStatus(resource.Name, 'Online', 'Active')
         details = AutoLoadDetails(resources, attributes)
         return details
+
+    @staticmethod
+    def destroy_vm_only(self, context, ports):
+        # release starting_index which means I need to have it first
+        # call_remote_connected
+        debugger.attach_debugger()
+        pass
 
     @staticmethod
     def connect_child_resources(context):
@@ -65,6 +73,7 @@ class TestModuleHandler:
             to_disconnect.extend([me, other])
 
         connectors.sort(key=lambda x: x.sequence)
+        ports.sort()
 
         for port in ports:
             connector = connectors.pop()

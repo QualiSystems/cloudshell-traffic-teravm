@@ -23,14 +23,15 @@ ATTRIBUTE_REQUESTED_SOURCE_VNIC_NAME = 'Requested Source vNIC Name'
 ATTRIBUTE_REQUESTED_TARGET_VNIC_NAME = 'Requested Target vNIC Name'
 ATTRIBUTE_SEQUENCE = 'Sequence'
 
-
 # ----------------- DICT KEYS --------------------#
 
 KEY_VCENTER_ADDRESS = 'vcenter_address'
 KEY_MODEL = 'model'
 KEY_LOGICAL_RESOURCE = 'logicalResource'
 KEY_NUMBER_OF_INTERFACES = 'number_of_interfaces'
-
+KEY_LICENSE_SERVER = 'license_server'
+KEY_INDEX_POOL = 'index_pool_key'
+KEY_STARTING_INDEX = 'starting_index'
 
 # ---------------- DEFAULTS ----------------------#
 
@@ -39,3 +40,8 @@ DEFAULT_TVM_TYPE = 'TVM-1'
 # --------------- TEST MODULE --------------------#
 COMMS_INTERFACE = 'Comms Interface'
 INTERFACE = 'Interface '
+
+
+# ------------- TVM CREDENTIALS ------------------#
+CONTROLLER_SSH_USER = 'cli'
+CONTROLLER_SSH_PASSWORD = 'diversifEye'

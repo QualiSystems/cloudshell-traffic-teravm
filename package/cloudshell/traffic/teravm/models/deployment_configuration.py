@@ -5,7 +5,7 @@ from cloudshell.traffic.teravm.common import i18n, error_messages
 
 class DeploymentConfiguration:
     """ the configuration of tvm deployment command as tvmma understands it """
-    def __init__(self, tvm_app_request, tvm_ma_details):
+    def __init__(self, tvm_app_request, tvm_ma_details, starting_index):
         """
         :type tvm_app_request: cloudshell.traffic.teravm.models.tvm_request.TvmAppRequest
         :type tvm_ma_details: cloudshell.traffic.teravm.models.tvm_ma_model.TVMMAModel
@@ -16,6 +16,7 @@ class DeploymentConfiguration:
 
         self._tvmma = tvm_ma_details
         self._request = tvm_app_request
+        self._starting_index = starting_index
 
         if self._request.model == i18n.CONTROLLER_MODEL:
             self._build_controller_config()
@@ -35,8 +36,9 @@ class DeploymentConfiguration:
             'vmcPassword': self._request.vcenter_password,
             'vmcHost[0]': self._tvmma.esxi_host,
             'vmcDatastore[0]': self._tvmma.datastore,
-            'vmcNetsByNic[0]': self._tvmma.comms_network,
             'vmcNetsByNic[1]': self._tvmma.management_network,
+            'vmcNetsByNic[0]': self._tvmma.comms_network,
+            'vmcVmIndex': self._starting_index,
             'vmcOva': './ova/'
         }
 
@@ -50,6 +52,7 @@ class DeploymentConfiguration:
             'tvmHost[0]': self._tvmma.esxi_host,
             'tvmDatastore[0]': self._tvmma.datastore,
             'tvmNetsByNic[0]': self._tvmma.comms_network,
+            'tvmStartIndex': self._starting_index,
             'tvmOva': './ova/'
         }
         for index in range(self._request.number_of_interfaces):
