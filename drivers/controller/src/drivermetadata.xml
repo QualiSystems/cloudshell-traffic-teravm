@@ -4,6 +4,13 @@
 	        <Command Description="" Name="load_configuration" DisplayName="Load Configuration" Tags="" >
 				<Parameters>
 	                <Parameter Name="test_location" DisplayName="Test Location" Type="String" Mandatory="True" />
+					<Parameter Description="if left empty, will arbitrarily select free interfaces from reservation"
+							   Name="interfaces" DisplayName="Test Module Interfaces" Type="String" Mandatory="False" />
+	            </Parameters>
+	        </Command>
+			<Command Description="" Name="preview_configuration" DisplayName="Preview Configuration" Tags="" >
+				<Parameters>
+	                <Parameter Name="test_location" DisplayName="Test Location" Type="String" Mandatory="True" />
 	            </Parameters>
 	        </Command>
 			<Command Description="" Name="run_test" DisplayName="Run Test" Tags="" />

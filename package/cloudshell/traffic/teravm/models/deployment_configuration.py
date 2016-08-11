@@ -38,7 +38,7 @@ class DeploymentConfiguration:
             'vmcDatastore[0]': self._tvmma.datastore,
             'vmcNetsByNic[1]': self._tvmma.management_network,
             'vmcNetsByNic[0]': self._tvmma.comms_network,
-            'vmcVmIndex': self._starting_index,
+            'vmcStartIndex': self._starting_index,
             'vmcOva': './ova/'
         }
 

@@ -2,12 +2,14 @@ from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterf
 from cloudshell.shell.core.context_utils import context_from_args
 from cloudshell.shell.core.driver_bootstrap import DriverBootstrap
 from cloudshell.traffic.teravm.controller.driver_handler import TVMControllerHandler
+import tvm_controller_config
 
 
 class TeraVMController(ResourceDriverInterface):
     def __init__(self):
         bootstrap = DriverBootstrap()
         bootstrap.initialize()
+        bootstrap.add_config(tvm_controller_config)
         self.handler = TVMControllerHandler()
 
     def cleanup(self):
@@ -17,8 +19,12 @@ class TeraVMController(ResourceDriverInterface):
         pass
 
     @context_from_args
-    def load_configuration(self, context, test_location):
-        return self.handler.load_configuration(context, test_location)
+    def load_configuration(self, context, test_location, interfaces):
+        return self.handler.load_configuration(context, test_location, interfaces)
+
+    @context_from_args
+    def preview_configuration(self, context, test_location):
+        return self.handler.preview_configuration(context, test_location)
 
     @context_from_args
     def run_test(self, context):
