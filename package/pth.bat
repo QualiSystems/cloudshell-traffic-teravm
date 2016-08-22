@@ -1,0 +1,1 @@
+set path=%path%;C:\work\7.1\Drop\TestShell\ExecutionServer\python\2.7.10

@@ -21,6 +21,7 @@ ATTRIBUTE_NAME_DEFAULT_DATACENTER = 'Default Datacenter'
 ATTRIBUTE_REQUESTED_VNIC_NAME = 'Requested vNIC Name'
 ATTRIBUTE_REQUESTED_SOURCE_VNIC_NAME = 'Requested Source vNIC Name'
 ATTRIBUTE_REQUESTED_TARGET_VNIC_NAME = 'Requested Target vNIC Name'
+ATTRIBUTE_NAME_LOGICAL_NAME = 'Logical Name'
 ATTRIBUTE_SEQUENCE = 'Sequence'
 
 # ----------------- DICT KEYS --------------------#

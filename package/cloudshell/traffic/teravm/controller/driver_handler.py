@@ -42,10 +42,12 @@ class TVMControllerHandler:
     def _run_before(self, context):
         self.user_name = context.reservation.owner_user
         self.testshell_api = get_cloudshell_session(context)
-        self.reservation = self.testshell_api.GetReservationDetails(context.reservation.reservation_id)
+        resid = context.reservation.reservation_id
+        self.reservation = self.testshell_api.GetReservationDetails(resid).ReservationDescription
 
     def preview_configuration(self, context, test_location):
         debugger.attach_debugger()
+        self._run_before(context)
         self.uploaded_test_name, file_name = self._prepare_test_group_file(test_location)
         pass
 
@@ -131,29 +133,28 @@ class TVMControllerHandler:
             raise e
 
     def _get_available_interfaces_from_reservation(self):
-        reservation_details = self.reservation
+        def get_as_tvm_interface(address):
+            parts = address.split('/')
+            # '00:50:56:00:00:06' => '006' ==> 6 ==> '6'
+            module_id = str(int(parts[0][-4:].replace(':', ''), 16))
+            agent_id = '1'
+            port_id = parts[1]
+            return '/'.join([module_id, agent_id, port_id])
 
-        interface_tree = {}
+        test_modules = [self.testshell_api.GetResourceDetails(res.Name) for res in self.reservation.Resources
+                        if res.ResourceModelName == c.TEST_MODULE_MODEL]
 
-        def _node_is_interface(int_node):
-            is_interface = True
-            for key, value in TVMControllerHandler.TVM_TM_INTERFACE_MODEL.iteritems():
-                if not hasattr(int_node, key) or getattr(int_node, key) != value:
-                    is_interface = False
-            return is_interface
+        ports = []
+        for mod in test_modules:
+            ports.extend([res for res in mod.ChildResources if res.ResourceModelName == c.TEST_MODULE_PORT_MODEL])
 
-        for node in reservation_details.ReservationDescription.Resources:
-            if _node_is_interface(node):
-                interface_id = int(self.testshell_api.get_resource_attributes(node.Name)[self.ID_ATTRIBUTE])
-                module_id = int(self.testshell_api.get_resource_attributes(node.Name.split('/')[0])[self.ID_ATTRIBUTE])
-                if interface_id is not None and interface_id != 0 and module_id is not None and module_id != 0:
-                    if module_id in interface_tree:
-                        interface_tree[module_id].append('{0}/1/{1}'.format(module_id, interface_id))
-                    else:
-                        interface_tree[module_id] = ['{0}/1/{1}'.format(module_id, interface_id)]
-        # self.logger.debug("Interface tree"+str(interface_tree))
-        self._message('+ Acquired available teravm interfaces from testbed')
-        return interface_tree
+        for port in ports:
+            port.interface_id = get_as_tvm_interface(port.FullAddress)
+            port.logical_name = \
+                (att.Value for att in port.ResourceAttributes if att.Name == c.ATTRIBUTE_NAME_LOGICAL_NAME).next()\
+                    .lower().trim()
+
+        return ports
 
     @retry(stop_max_attempt_number=5, wait_fixed=5000)
     def _get_first_running_test(self):
@@ -190,24 +191,49 @@ class TVMControllerHandler:
         self._message('+ Test group name is ' + test_group_name)
         return test_group_name
 
-    def _generate_test_file_with_appropriate_interfaces(self, test_file_path, interfaces):
+    def _generate_test_file_with_appropriate_interfaces(self, test_file_path, ports):
         tree = ET.parse(test_file_path)
         root = tree.getroot()
-        interface_elements = []
-        interface_xml_elements = root.findall('.//interface')
-        if interface_xml_elements is not None and len(interface_xml_elements) > 0:
-            for interface_element in interface_xml_elements:
-                if hasattr(interface_element, 'text') and interface_element.text is not None:
-                    interface_elements.append(interface_element)
-        else:
-            raise Exception('_change_appropriate_interfaces_values', 'Cannot find interface section')
+        port_targets = [port.logical_name for port in ports]
 
-        for tm_id, tm_interfaces in interfaces.iteritems():
-            if len(tm_interfaces) >= len(interface_elements):
-                for i in range(0, len(interface_elements)):
-                    interface_elements[i].text = sorted(tm_interfaces)[i]
-                # self._logger.debug('Generated test file with TM: {0}'.format(tm_id))
-                break
+        interface_elements = []
+        virtual_hosts = root.findall('.//direct_virtual_host')
+        for virtual_host in virtual_hosts:
+            interfaces = virtual_host.findall('.//interface')
+            virtual_host_name = virtual_host.find('name').text
+            for interface in interfaces:
+                if interface.text.startswith('\n'):
+                    continue
+                interface.virtual_host_name = virtual_host_name.lower().trim()
+            interface_elements.extend(interfaces)
+
+        # Selecting which port interface replaces which configuration interface:
+        # First, select by logical name equivalent to virtual host name that is parent of interface
+        # If not, select by logical name equivalent to interface id, 1/2/3
+        # If not, select arbitrarily a port
+
+        for element in list(interface_elements):
+            if element.virtual_host_name in port_targets:
+                for port in ports:
+                    if port.logical_name == element.virtual_host_name:
+                        element.text = port.interface_id
+                        ports.remove(port)
+                        break
+                interface_elements.remove(element)
+                continue
+
+        for element in list(interface_elements):
+            if element.text in port_targets:
+                for port in ports:
+                    if port.logical_name == element.text:
+                        element.text = port.interface_id
+                        ports.remove(port)
+                        break
+                continue
+
+        for element in interface_elements:
+            port = ports.pop()
+            element.text = port.interface_id
 
         temp_file_path = tempfile.mktemp()
         tree.write(temp_file_path)
