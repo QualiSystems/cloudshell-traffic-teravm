@@ -4,8 +4,6 @@
 	        <Command Description="" Name="load_configuration" DisplayName="Load Configuration" Tags="" >
 				<Parameters>
 	                <Parameter Name="test_location" DisplayName="Test Location" Type="String" Mandatory="True" />
-					<Parameter Description="if left empty, will arbitrarily select free interfaces from reservation"
-							   Name="interfaces" DisplayName="Test Module Interfaces" Type="String" Mandatory="False" />
 	            </Parameters>
 	        </Command>
 			<Command Description="" Name="preview_configuration" DisplayName="Preview Configuration" Tags="" >
@@ -16,7 +14,11 @@
 			<Command Description="" Name="run_test" DisplayName="Run Test" Tags="" />
 	        <Command Description="" Name="stop_test" DisplayName="Stop Test" Tags="" />
 			<Command Description="" Name="get_inventory" DisplayName="Autoload" Tags="" />
-			<Command Description="" Name="run_custom_command" DisplayName="Run Custom Command" Tags="" />
+			<Command Description="" Name="run_custom_command" DisplayName="Run Custom Command" Tags="">
+				<Parameters>
+	                <Parameter Name="command_text" DisplayName="Command Text" Type="String" Mandatory="True" />
+	            </Parameters>
+			</Command>
 		</Category>
     </Layout>
 </Driver>

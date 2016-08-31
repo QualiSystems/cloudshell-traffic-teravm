@@ -1,0 +1,2 @@
+del C:\work\git\cloudshell-traffic-teravm\drivers\controller\src\src.zip /F
+"C:\Program Files\7-Zip\7z.exe" a -r C:\work\git\cloudshell-traffic-teravm\drivers\controller\src\src.zip -w C:\work\git\cloudshell-traffic-teravm\drivers\controller\src\*.* -mem=AES256

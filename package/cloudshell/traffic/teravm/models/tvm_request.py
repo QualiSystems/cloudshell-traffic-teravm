@@ -6,7 +6,7 @@ from cloudshell.traffic.teravm.common import i18n as c, error_messages
 class TvmAppRequest:
     """ Gets attributes and other data about request from the deploying app """
     def __init__(self, vcenter_address, vcenter_user, vcenter_password, vcenter_default_datacenter, requested_model,
-                 number_of_interfaces=2, tvm_type=None):
+                 number_of_interfaces=2, tvm_type=None, ports_logical_names=''):
 
         self.vcenter_address = vcenter_address
         self.vcenter_user = vcenter_user
@@ -15,6 +15,7 @@ class TvmAppRequest:
         self.model = requested_model
         self.number_of_interfaces = number_of_interfaces
         self.tvm_type = tvm_type
+        self.ports_logical_names = ports_logical_names
 
     @classmethod
     def from_context(cls, context, api):
@@ -25,7 +26,12 @@ class TvmAppRequest:
         app = AppDetails(context, api)
         request = app.attributes
         request[c.KEY_MODEL] = app.model
-        request[c.KEY_NUMBER_OF_INTERFACES] = 2 if len(app.connections)<2 else len(app.connections)
+        number_of_ports = int(request[c.ATTRIBUTE_NAME_NUMBER_OF_PORTS])
+        request[c.ATTRIBUTE_NAME_NUMBER_OF_PORTS] = 2 if number_of_ports == 0 else number_of_ports
+        num_of_conns = len(app.connections)
+        if 0 < request[c.ATTRIBUTE_NAME_NUMBER_OF_PORTS] < num_of_conns:
+            raise Exception('More connections configured to app than requested ports\n'
+                            'You requested {0} connections and {1} ports'.format(num_of_conns, request[c.ATTRIBUTE_NAME_NUMBER_OF_PORTS]))
         return cls.from_dict(request)
 
     @classmethod
@@ -43,17 +49,20 @@ class TvmAppRequest:
         :type request_dict: dict
         :rtype: TvmAppRequest
         """
-        if c.KEY_NUMBER_OF_INTERFACES not in request_dict:
-            request_dict[c.KEY_NUMBER_OF_INTERFACES] = 2
         if c.ATTRIBUTE_NAME_TVM_TYPE not in request_dict:
             request_dict[c.ATTRIBUTE_NAME_TVM_TYPE] = c.DEFAULT_TVM_TYPE
+
+        if c.ATTRIBUTE_PORTS_LOGICAL_NAMES not in request_dict:
+            request_dict[c.ATTRIBUTE_PORTS_LOGICAL_NAMES] = c.DEFAULT_PORTS_LOGICAL_NAMES
+
         return cls(request_dict[c.KEY_VCENTER_ADDRESS],
                    request_dict[c.ATTRIBUTE_NAME_USER],
                    request_dict[c.ATTRIBUTE_NAME_PASSWORD],
                    request_dict[c.ATTRIBUTE_NAME_DEFAULT_DATACENTER],
                    request_dict[c.KEY_MODEL],
-                   request_dict[c.KEY_NUMBER_OF_INTERFACES],
-                   request_dict[c.ATTRIBUTE_NAME_TVM_TYPE])
+                   request_dict[c.ATTRIBUTE_NAME_NUMBER_OF_PORTS],
+                   request_dict[c.ATTRIBUTE_NAME_TVM_TYPE],
+                   request_dict[c.ATTRIBUTE_PORTS_LOGICAL_NAMES])
 
     def __str__(self):
         return json.dumps(self.to_dict())
@@ -68,8 +77,9 @@ class TvmAppRequest:
             c.ATTRIBUTE_NAME_PASSWORD: self.vcenter_password,
             c.ATTRIBUTE_NAME_DEFAULT_DATACENTER: self.vcenter_default_datacenter,
             c.KEY_MODEL: self.model,
-            c.KEY_NUMBER_OF_INTERFACES: self.number_of_interfaces,
-            c.ATTRIBUTE_NAME_TVM_TYPE: self.tvm_type
+            c.ATTRIBUTE_NAME_NUMBER_OF_PORTS: self.number_of_interfaces,
+            c.ATTRIBUTE_NAME_TVM_TYPE: self.tvm_type,
+            c.ATTRIBUTE_PORTS_LOGICAL_NAMES: self.ports_logical_names
         }
 
 
@@ -85,6 +95,8 @@ class AppDetails:
         self._connections = self._get_app_connections(reservation_details, app_name)
         self._attributes = self._get_vcenter_attributes(api, deployment)
         self._attributes.update(deployment.attributes)
+        if c.ATTRIBUTE_NAME_NUMBER_OF_PORTS not in self._attributes.keys():
+            self._attributes[c.ATTRIBUTE_NAME_NUMBER_OF_PORTS] = -1
         self._app = json.loads(deployment.app_context.app_request_json)
 
     @staticmethod

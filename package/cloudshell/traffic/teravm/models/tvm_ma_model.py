@@ -3,14 +3,24 @@ import cloudshell.traffic.teravm.common.i18n as c
 
 class TVMMAModel:
     def __init__(self, esxi_host, datastore, management_network, comms_network, host_address, vm_location,
-                 holding_network):
+                 holding_network, dvswitch):
         self._esxi_host = esxi_host
         self._datastore = datastore
-        self._management_network = management_network
-        self._comms_network = comms_network
         self._host_address = host_address
         self._vm_location = vm_location
-        self._holding_network = holding_network
+        self._dvswitch = dvswitch.strip()
+
+        if self._dvswitch:
+            self._management_network = '{0} ({1})'.format(management_network, self._dvswitch)
+            self._comms_network = '{0} ({1})'.format(comms_network, self._dvswitch)
+            self._holding_network = '{0} ({1})'.format(holding_network, self._dvswitch)
+
+        else:
+            self._management_network = management_network
+            self._comms_network = comms_network
+            self._holding_network = holding_network
+
+
 
     @classmethod
     def from_dict(cls, tvmma_details, host_address):
@@ -20,7 +30,8 @@ class TVMMAModel:
                    tvmma_details[c.ATTRIBUTE_NAME_COMMS_NETWORK],
                    host_address,
                    tvmma_details[c.ATTRIBUTE_NAME_VM_LOCATION],
-                   tvmma_details[c.ATTRIBUTE_NAME_HOLDING_NETWORK])
+                   tvmma_details[c.ATTRIBUTE_NAME_HOLDING_NETWORK],
+                   tvmma_details[c.ATTRIBUTE_NAME_DVSWITCH])
 
     @classmethod
     def from_context(cls, context):
@@ -57,3 +68,7 @@ class TVMMAModel:
     @property
     def holding_network(self):
         return self._holding_network
+
+    @property
+    def dvswitch(self):
+        return self._dvswitch

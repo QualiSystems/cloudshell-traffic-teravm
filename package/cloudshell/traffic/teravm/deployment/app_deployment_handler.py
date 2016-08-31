@@ -35,7 +35,7 @@ class AppDeploymentHandler:
         }
 
         # {'Refresh IP Timeout': '600', 'Auto Power On': 'False', 'Auto Delete': 'False', 'Wait for IP': 'False',
-        #  'Auto Power Off': 'False', 'Auto Refresh IP': 'False', 'TVM MA Name': 'tvmma'}
+        #  'Auto Power Off': 'False', 'Auto Refresh IP': 'False', 'TVM MA Name': 'tvmma', 'tvm_license_server'}
         app.update(lowercase_and_underscores(context.resource.attributes))
 
         app[c.KEY_INDEX_POOL] = '{0}_{1}_{2}'.format(app['cloud_provider_resource_name'], app['tvm_ma_name'],

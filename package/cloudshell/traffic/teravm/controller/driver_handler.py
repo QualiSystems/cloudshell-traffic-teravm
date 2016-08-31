@@ -8,16 +8,18 @@ import tempfile
 import re
 import os
 import xml.etree.ElementTree as ET
-from scp import SCPClient
 
 from cloudshell.shell.core.driver_context import AutoLoadDetails, AutoLoadResource, AutoLoadAttribute
 from cloudshell.cp.vcenter.common.vcenter.vmomi_service import pyVmomiService
-from cloudshell.traffic.teravm.common.cloudshell_helper import get_cloudshell_session
+from cloudshell.traffic.teravm.common.cloudshell_helper import get_cloudshell_session, get_attribute_value
 from cloudshell.traffic.teravm.common.vsphere_helper import get_vsphere_credentials
 from cloudshell.traffic.teravm.common import i18n as c
-from cloudshell.cli.service.cli_service import CliService
+from cloudshell.traffic.teravm.controller.port_selector_helper import *
+from cloudshell.traffic.teravm.controller.teravm_executive_helper import *
 
 from debug_utils import debugger
+
+CLOUDSHELL_TEST_CONFIGURATION = 'CloudshellConfiguration'
 
 
 def retry_if_result_none(result):
@@ -32,51 +34,47 @@ class TVMControllerHandler:
         'ResourceModelName': 'TeraVM Interface'
     }
 
-    def __init__(self):
+    FAILED_TO_IMPORT_MSG = 'Could not import test group.\nPlease contact your administrator.'
+    FAILED_TO_START_MSG = 'Could not start test group.\nPlease contact your administrator.'
+
+    def __init__(self, cli_service):
         self.uploaded_test_name = ''
-        self.cli = CliService()
-        self.cli.send_file = send_file
+        self.cli = cli_service
         self.user_name = ''
         self.reservation_id = ''
-
-    def _run_before(self, context):
-        self.user_name = context.reservation.owner_user
-        self.testshell_api = get_cloudshell_session(context)
-        resid = context.reservation.reservation_id
-        self.reservation = self.testshell_api.GetReservationDetails(resid).ReservationDescription
+        self.interfaces = []
 
     def preview_configuration(self, context, test_location):
-        debugger.attach_debugger()
-        self._run_before(context)
-        self.uploaded_test_name, file_name = self._prepare_test_group_file(test_location)
+        # self._run_before(context)
+        # debugger.attach_debugger()
+        # self.uploaded_test_name, file_name = self._prepare_test_group_file(test_location)
         pass
 
-    def load_configuration(self, context, test_location, interfaces):
-        self.user_name = context.reservation.owner_user
-        self.uploaded_test_name, file_name = self._prepare_test_group_file(test_location)
-        # self.register_active_ports()
-        # self.cancel_running_test_if_is_test_group(self.uploaded_test_name)
-        # self.import_test_group(file_name)
-        pass
+    def load_configuration(self, context, test_location):
+        self._run_before(context)
+        debugger.attach_debugger()
+        self.interfaces = self._get_available_interfaces_from_reservation()
+        file_name = self._prepare_test_group_file(test_location, self.interfaces)
+        self._import_test_group(file_name)
 
     def run_test(self, context):
-        self.user_name = context.reservation.owner_user
-        # if self.uploaded_test_name == '':
-        #     raise Exception('No test group was uploaded!')
-        # try:
-        #     self.run_stuff(self.uploaded_test_name)
-        # except Exception as e:
-        #     self.cancel_test_gracefully(e, self.uploaded_test_name)
-        pass
+        debugger.attach_debugger()
+        self._run_before(context)
+        self._reserve_active_ports(self.interfaces)
+        try:
+            self._start_test_group(CLOUDSHELL_TEST_CONFIGURATION)
+        except Exception as e:
+            self._cancel_start_test_group_gracefully(e, CLOUDSHELL_TEST_CONFIGURATION)
 
     def stop_test(self, context):
-        self.user_name = context.reservation.owner_user
-        # self.stop_all_tests()
-        pass
+        debugger.attach_debugger()
+        self._run_before(context)
+        self._unreserve_active_ports(self.interfaces)
+        self.cli.send_command('cli -u {0} stopTestGroup //{1}'.format(self.user_name, CLOUDSHELL_TEST_CONFIGURATION))
+        self._message('+ Stopped ' + CLOUDSHELL_TEST_CONFIGURATION)
 
-    @staticmethod
-    def run_custom_command(context):
-        pass
+    def run_custom_command(self, context, command_text):
+        self.cli.send_command(command_text)
 
     @staticmethod
     def get_inventory(context):
@@ -99,19 +97,43 @@ class TVMControllerHandler:
         api.SetResourceLiveStatus(resource.Name, 'Online', 'Active')
         return AutoLoadDetails([], [])
 
-    def _prepare_test_group_file(self, test_path):
-        interfaces = self._get_available_interfaces_from_reservation()
-        modified_test_path = self._generate_test_file_with_appropriate_interfaces(test_path, interfaces)
-        test_name = self._get_test_name(modified_test_path)
-        self._delete_test_group_if_exists(test_name)
+    def _start_test_group(self, test_name):
+        self.cli.send_command('cli -u {0} startTestGroup //{1}'.format(self.user_name, test_name),
+                              error_msg=self.FAILED_TO_START_MSG)
+        self._message('Started ' + test_name)
+
+    def _run_before(self, context):
+        self.user_name = context.reservation.owner_user
+        self.testshell_api = get_cloudshell_session(context)
+        resid = context.reservation.reservation_id
+        self.reservation = self.testshell_api.GetReservationDetails(resid).ReservationDescription
+        self.reservation.id = resid
+
+    def _import_test_group(self, file_name):
+            self.cli.send_command(
+                'cli -u {0} importTestGroup // {1}/{2}'.format(self.user_name, self.TVM_TEST_PATH, file_name),
+                error_msg=self.FAILED_TO_IMPORT_MSG)
+            self._message('+ Imported test group')
+
+    def _prepare_test_group_file(self, test_path, interfaces):
+        modified_test_path = self._generate_test_file_with_replaced_interfaces(test_path, interfaces)
+        self._delete_test_group_if_exists(CLOUDSHELL_TEST_CONFIGURATION)
         file_name = self._copy_test_group_file(modified_test_path)
-        return file_name, test_name
+        return file_name
 
     def _copy_test_group_file(self, modified_test_path):
         self.cli.send_command('test -d {0}||mkdir qs_tests'.format(self.TVM_TEST_PATH))
         self.cli.send_file(modified_test_path, self.TVM_TEST_PATH)
         file_dir, file_name = os.path.split(modified_test_path)
         return file_name
+
+    def _cancel_start_test_if_test_is_running(self, test_name):
+        try:
+            if self._is_test_running(test_name):
+                self._message('{0} is already running. Only a single instance can run'.format(test_name))
+                raise Exception('\n' + test_name + ' is already running')
+        except RetryError:
+            pass
 
     def _delete_test_group_if_exists(self, test_name):
         try:
@@ -146,15 +168,40 @@ class TVMControllerHandler:
 
         ports = []
         for mod in test_modules:
-            ports.extend([res for res in mod.ChildResources if res.ResourceModelName == c.TEST_MODULE_PORT_MODEL])
+            module_ports = [res for res in mod.ChildResources if res.ResourceModelName == c.TEST_MODULE_PORT_MODEL
+                            and c.COMMS_INTERFACE not in res.Name]
+            mac = mod.FullAddress.split('/').pop()
+            for port in module_ports:
+                port.tvm_executive = get_attribute_value(c.ATTRIBUTE_NAME_TVM_EXECUTIVE, mod)
+                port.mac = mac
+            ports.extend(module_ports)
 
         for port in ports:
             port.interface_id = get_as_tvm_interface(port.FullAddress)
-            port.logical_name = \
-                (att.Value for att in port.ResourceAttributes if att.Name == c.ATTRIBUTE_NAME_LOGICAL_NAME).next()\
-                    .lower().trim()
+            port.logical_name = get_attribute_value(c.ATTRIBUTE_NAME_LOGICAL_NAME, port).lower().strip()
 
         return ports
+
+    def _reserve_active_ports(self, interfaces):
+        pool_manager_addresses = {interface.tvm_executive for interface in interfaces}
+        macs = {interface.mac for interface in interfaces}
+        if len(pool_manager_addresses) > 1:
+            raise Exception('Cannot execute test on TVM test module interfaces from different pool managers!'
+                            'Interfaces have these pool manager ids' + ', '.join(pool_manager_addresses))
+        pool_manager_address = pool_manager_addresses.pop()
+        interface_tvm_resource_ids = get_interface_tvm_resource_ids(macs, pool_manager_address)
+        reserve_interfaces_in_pool_manager(interface_tvm_resource_ids, self.user_name, pool_manager_address)
+
+    @staticmethod
+    def _unreserve_active_ports(interfaces):
+        pool_manager_addresses = {interface.tvm_executive for interface in interfaces}
+        macs = {interface.mac for interface in interfaces}
+        if len(pool_manager_addresses) > 1:
+            raise Exception('Cannot execute test on TVM test module interfaces from different pool managers!'
+                            'Interfaces have these pool manager ids' + ', '.join(pool_manager_addresses))
+        pool_manager_address = pool_manager_addresses.pop()
+        interface_tvm_resource_ids = get_interface_tvm_resource_ids(macs, pool_manager_address)
+        unreserve_interfaces_in_pool_manager(interface_tvm_resource_ids, pool_manager_address)
 
     @retry(stop_max_attempt_number=5, wait_fixed=5000)
     def _get_first_running_test(self):
@@ -191,61 +238,56 @@ class TVMControllerHandler:
         self._message('+ Test group name is ' + test_group_name)
         return test_group_name
 
-    def _generate_test_file_with_appropriate_interfaces(self, test_file_path, ports):
+    def _generate_test_file_with_replaced_interfaces(self, test_file_path, ports):
         tree = ET.parse(test_file_path)
         root = tree.getroot()
-        port_targets = [port.logical_name for port in ports]
 
+        interface_elements = self._get_interface_elements_from_xml(root)
+
+        # Selecting which port interface replaces which configuration interface:
+        # First, select by logical name equivalent to *virtual host name* that is parent of interface
+        # If not, select by logical name equivalent to interface id, 1/2/3
+        # If not, select arbitrarily a port
+
+        available_ports = list(ports)
+
+        interfaces_count = len(interface_elements)
+        if len(ports) < interfaces_count:
+            raise Exception('Not enough free ports to for test configuration. Need {0} ports'.format(interfaces_count))
+
+        populate_free_interfaces_by_test_element_name(interface_elements, available_ports)
+        populate_free_interfaces_by_test_element_interface(interface_elements, available_ports)
+        populate_free_interfaces_arbitrarily(interface_elements, available_ports)
+
+        name = root.find('./test_group/name')
+        name.text = CLOUDSHELL_TEST_CONFIGURATION
+
+        temp_file_path = tempfile.mktemp()
+        tree.write(temp_file_path)
+        # self._message('+ Test configuration based on available test interfaces generated')
+        return temp_file_path
+
+    @staticmethod
+    def _get_interface_elements_from_xml(root):
         interface_elements = []
         virtual_hosts = root.findall('.//direct_virtual_host')
         for virtual_host in virtual_hosts:
             interfaces = virtual_host.findall('.//interface')
             virtual_host_name = virtual_host.find('name').text
             for interface in interfaces:
-                if interface.text.startswith('\n'):
+                if not hasattr(interface, 'text') and interface.text.startswith('\n'):
                     continue
-                interface.virtual_host_name = virtual_host_name.lower().trim()
+                interface.virtual_host_name = virtual_host_name.lower().strip()
             interface_elements.extend(interfaces)
 
-        # Selecting which port interface replaces which configuration interface:
-        # First, select by logical name equivalent to virtual host name that is parent of interface
-        # If not, select by logical name equivalent to interface id, 1/2/3
-        # If not, select arbitrarily a port
-
-        for element in list(interface_elements):
-            if element.virtual_host_name in port_targets:
-                for port in ports:
-                    if port.logical_name == element.virtual_host_name:
-                        element.text = port.interface_id
-                        ports.remove(port)
-                        break
-                interface_elements.remove(element)
-                continue
-
-        for element in list(interface_elements):
-            if element.text in port_targets:
-                for port in ports:
-                    if port.logical_name == element.text:
-                        element.text = port.interface_id
-                        ports.remove(port)
-                        break
-                continue
-
-        for element in interface_elements:
-            port = ports.pop()
-            element.text = port.interface_id
-
-        temp_file_path = tempfile.mktemp()
-        tree.write(temp_file_path)
-        self._message('+ Test configuration based on available test interfaces generated')
-        return temp_file_path
+        return interface_elements
 
     def _get_user_name(self):
         user_name_without_spaces = self.reservation['Username'].replace(' ', '_')
         return user_name_without_spaces
 
     def _message(self, message):
-        self.testshell_api.WriteMessageToReservationOutput(self.reservation['ReservationId'], message)
+        self.testshell_api.WriteMessageToReservationOutput(self.reservation.id, message)
 
 ###############################################
 ###############################################
@@ -296,9 +338,3 @@ def _license_tvm_controller(controller_management_ip, license_server_ip):
         print stdout.readlines()
         ssh.close()
 
-
-def send_file(self, local_path, remote_path):
-    if not self._session:
-        self.connect()
-    scp = SCPClient(self._session.get_handler().get_transport())
-    scp.put(local_path, remote_path)

@@ -1,1 +1,3 @@
-cloudshell-shell-core==2.2.212
+cloudshell-shell-core>=2.3.0,<2.4
+scp
+inject
