@@ -34,3 +34,13 @@ def unreserve_interfaces_in_pool_manager(tvm_resource_ids, pool_manager_ip):
                           "Content-Type": "application/vnd.cobham.v1+json"},
                           json=reserve_test_module_data)
     print result
+
+
+def unregister_interfaces_in_pool_manager(tvm_resource_ids, pool_manager_ip):
+    for resource_id in tvm_resource_ids:
+        result = requests.delete(url=str.format('http://{0}:8080/poolmanager/api/testModules/{1}',
+                                                pool_manager_ip,
+                                                resource_id),
+                                 headers={"Accept": "application/vnd.cobham.v1+json",
+                                          "Content-Type": "application/vnd.cobham.v1+json"})
+        print result
