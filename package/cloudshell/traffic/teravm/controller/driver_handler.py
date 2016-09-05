@@ -38,40 +38,40 @@ class TVMControllerHandler:
     FAILED_TO_START_MSG = 'Could not start test group.\nPlease contact your administrator.'
 
     def __init__(self, cli_service):
-        self.uploaded_test_name = ''
         self.cli = cli_service
-        self.user_name = ''
-        self.reservation_id = ''
-        self.interfaces = []
 
     def preview_configuration(self, context, test_location):
-        # self._run_before(context)
+        # api = get_cloudshell_session(context)
         # debugger.attach_debugger()
         # self.uploaded_test_name, file_name = self._prepare_test_group_file(test_location)
         pass
 
     def load_configuration(self, context, test_location):
-        self._run_before(context)
-        debugger.attach_debugger()
-        self.interfaces = self._get_available_interfaces_from_reservation()
-        file_name = self._prepare_test_group_file(test_location, self.interfaces)
-        self._import_test_group(file_name)
+        api = get_cloudshell_session(context)
+        reservation_id = context.reservation.reservation_id
+        reservation = api.GetReservationDetails(reservation_id).ReservationDescription
+
+        interfaces = self._get_available_interfaces_from_reservation(reservation, api)
+        self._reserve_active_ports(interfaces, context.reservation.owner_user)
+        file_name = self._prepare_test_group_file(test_location, interfaces, context.reservation.owner_user,
+                                                  reservation_id, api)
+        self._import_test_group(file_name, context.reservation.owner_user, reservation_id, api)
 
     def run_test(self, context):
-        debugger.attach_debugger()
-        self._run_before(context)
-        self._reserve_active_ports(self.interfaces)
+        api = get_cloudshell_session(context)
+        reservation_id = context.reservation.reservation_id
         try:
-            self._start_test_group(CLOUDSHELL_TEST_CONFIGURATION)
+            self._start_test_group(CLOUDSHELL_TEST_CONFIGURATION, context.reservation.owner_user, reservation_id, api)
         except Exception as e:
-            self._cancel_start_test_group_gracefully(e, CLOUDSHELL_TEST_CONFIGURATION)
+            self._cancel_start_test_group_gracefully(e, CLOUDSHELL_TEST_CONFIGURATION, context.reservation.owner_user,
+                                                     reservation_id, api)
 
     def stop_test(self, context):
-        debugger.attach_debugger()
-        self._run_before(context)
-        self._unreserve_active_ports(self.interfaces)
-        self.cli.send_command('cli -u {0} stopTestGroup //{1}'.format(self.user_name, CLOUDSHELL_TEST_CONFIGURATION))
-        self._message('+ Stopped ' + CLOUDSHELL_TEST_CONFIGURATION)
+        api = get_cloudshell_session(context)
+        reservation_id = context.reservation.reservation_id
+        self.cli.send_command('cli -u {0} stopTestGroup //{1}'.format(context.reservation.owner_user,
+                                                                      CLOUDSHELL_TEST_CONFIGURATION))
+        self._message('+ Stopped ' + CLOUDSHELL_TEST_CONFIGURATION, reservation_id, api)
 
     def run_custom_command(self, context, command_text):
         self.cli.send_command(command_text)
@@ -97,27 +97,19 @@ class TVMControllerHandler:
         api.SetResourceLiveStatus(resource.Name, 'Online', 'Active')
         return AutoLoadDetails([], [])
 
-    def _start_test_group(self, test_name):
-        self.cli.send_command('cli -u {0} startTestGroup //{1}'.format(self.user_name, test_name),
-                              error_msg=self.FAILED_TO_START_MSG)
-        self._message('Started ' + test_name)
+    def _start_test_group(self, test_name, user_name, reservation_id, api):
+        self.cli.send_command('cli -u {0} startTestGroup //{1}'.format(user_name, test_name))
+        self._message('Started ' + test_name, reservation_id, api)
 
-    def _run_before(self, context):
-        self.user_name = context.reservation.owner_user
-        self.testshell_api = get_cloudshell_session(context)
-        resid = context.reservation.reservation_id
-        self.reservation = self.testshell_api.GetReservationDetails(resid).ReservationDescription
-        self.reservation.id = resid
-
-    def _import_test_group(self, file_name):
+    def _import_test_group(self, file_name, user_name, reservation_id, api):
             self.cli.send_command(
-                'cli -u {0} importTestGroup // {1}/{2}'.format(self.user_name, self.TVM_TEST_PATH, file_name),
-                error_msg=self.FAILED_TO_IMPORT_MSG)
-            self._message('+ Imported test group')
+                'cli -u {0} importTestGroup // {1}/{2}'.format(user_name, self.TVM_TEST_PATH, file_name)
+            )
+            self._message('+ Imported test group', reservation_id, api)
 
-    def _prepare_test_group_file(self, test_path, interfaces):
+    def _prepare_test_group_file(self, test_path, interfaces, user_name, reservation_id, api):
         modified_test_path = self._generate_test_file_with_replaced_interfaces(test_path, interfaces)
-        self._delete_test_group_if_exists(CLOUDSHELL_TEST_CONFIGURATION)
+        self._delete_test_group_if_exists(CLOUDSHELL_TEST_CONFIGURATION, user_name, reservation_id, api)
         file_name = self._copy_test_group_file(modified_test_path)
         return file_name
 
@@ -127,34 +119,36 @@ class TVMControllerHandler:
         file_dir, file_name = os.path.split(modified_test_path)
         return file_name
 
-    def _cancel_start_test_if_test_is_running(self, test_name):
+    def _cancel_start_test_if_test_is_running(self, test_name, reservation_id, api):
         try:
             if self._is_test_running(test_name):
-                self._message('{0} is already running. Only a single instance can run'.format(test_name))
+                self._message('{0} is already running. Only a single instance can run'.format(test_name),
+                              reservation_id, api)
                 raise Exception('\n' + test_name + ' is already running')
         except RetryError:
             pass
 
-    def _delete_test_group_if_exists(self, test_name):
+    def _delete_test_group_if_exists(self, test_name, user_name, reservation_id, api):
         try:
-            self.cli.send_command('cli -u {0} deleteTestGroup //{1}'.format(self.user_name, test_name))
-            self._message('+ Deleted test group with same name from controller')
+            self.cli.send_command('cli -u {0} deleteTestGroup //{1}'.format(user_name, test_name))
+            self._message('+ Deleted test group with same name from controller', reservation_id, api)
         except:
             self.cli.send_command('\n')
             pass
 
-    def _cancel_start_test_group_gracefully(self, e, test_name):
+    def _cancel_start_test_group_gracefully(self, e, test_name, user_name, reservation_id, api):
         try:
-            self._message('~ An error occurred, stopping test. Please contact your administrator')
-            self.cli.send_command('cli -u {0} stopTestGroup {1}'.format(self.user_name, test_name))
-            self._message('~ Test execution cancelled.')
+            self._message('~ An error occurred, stopping test. Please contact your administrator', reservation_id, api)
+            self.cli.send_command('cli -u {0} stopTestGroup {1}'.format(user_name, test_name))
+            self._message('~ Test execution cancelled.', reservation_id, api)
         finally:
             if len(e.args) > 1:
-                self._message(' ~ Failed command returned: \n\n {0}'.format(e.args[1]))
+                self._message(' ~ Failed command returned: \n\n {0}'.format(e.args[1]), reservation_id, api)
                 raise Exception(e.args[0])  # hacky way to show only the main message.
             raise e
 
-    def _get_available_interfaces_from_reservation(self):
+    @staticmethod
+    def _get_available_interfaces_from_reservation(reservation, api):
         def get_as_tvm_interface(address):
             parts = address.split('/')
             # '00:50:56:00:00:06' => '006' ==> 6 ==> '6'
@@ -163,7 +157,7 @@ class TVMControllerHandler:
             port_id = parts[1]
             return '/'.join([module_id, agent_id, port_id])
 
-        test_modules = [self.testshell_api.GetResourceDetails(res.Name) for res in self.reservation.Resources
+        test_modules = [api.GetResourceDetails(res.Name) for res in reservation.Resources
                         if res.ResourceModelName == c.TEST_MODULE_MODEL]
 
         ports = []
@@ -182,18 +176,8 @@ class TVMControllerHandler:
 
         return ports
 
-    def _reserve_active_ports(self, interfaces):
-        pool_manager_addresses = {interface.tvm_executive for interface in interfaces}
-        macs = {interface.mac for interface in interfaces}
-        if len(pool_manager_addresses) > 1:
-            raise Exception('Cannot execute test on TVM test module interfaces from different pool managers!'
-                            'Interfaces have these pool manager ids' + ', '.join(pool_manager_addresses))
-        pool_manager_address = pool_manager_addresses.pop()
-        interface_tvm_resource_ids = get_interface_tvm_resource_ids(macs, pool_manager_address)
-        reserve_interfaces_in_pool_manager(interface_tvm_resource_ids, self.user_name, pool_manager_address)
-
     @staticmethod
-    def _unreserve_active_ports(interfaces):
+    def _reserve_active_ports(interfaces, user_name):
         pool_manager_addresses = {interface.tvm_executive for interface in interfaces}
         macs = {interface.mac for interface in interfaces}
         if len(pool_manager_addresses) > 1:
@@ -201,10 +185,10 @@ class TVMControllerHandler:
                             'Interfaces have these pool manager ids' + ', '.join(pool_manager_addresses))
         pool_manager_address = pool_manager_addresses.pop()
         interface_tvm_resource_ids = get_interface_tvm_resource_ids(macs, pool_manager_address)
-        unreserve_interfaces_in_pool_manager(interface_tvm_resource_ids, pool_manager_address)
+        reserve_interfaces_in_pool_manager(interface_tvm_resource_ids, user_name, pool_manager_address)
 
     @retry(stop_max_attempt_number=5, wait_fixed=5000)
-    def _get_first_running_test(self):
+    def _get_first_running_test(self, reservation_id, api):
         test_name = None
         self._clear_console_buffer()
         command = 'cli showRunningTestGroup'
@@ -216,7 +200,7 @@ class TVMControllerHandler:
                 test_name = result.group(1)
         if test_name is None:
             raise Exception('Could not find a running test')
-        self._message('+ Found running test: ' + test_name)
+        self._message('+ Found running test: ' + test_name, reservation_id, api)
         return test_name
 
     def _clear_console_buffer(self):
@@ -230,12 +214,12 @@ class TVMControllerHandler:
         result = re.search(p, out)
         return result is not None
 
-    def _get_test_name(self, test_file_path):
+    def _get_test_name(self, test_file_path, reservation_id, api):
         tree = ET.parse(test_file_path)
         root = tree.getroot()
         name = root.findall('./test_group/name')
         test_group_name = name[0].text
-        self._message('+ Test group name is ' + test_group_name)
+        self._message('+ Test group name is ' + test_group_name, reservation_id, api)
         return test_group_name
 
     def _generate_test_file_with_replaced_interfaces(self, test_file_path, ports):
@@ -282,12 +266,9 @@ class TVMControllerHandler:
 
         return interface_elements
 
-    def _get_user_name(self):
-        user_name_without_spaces = self.reservation['Username'].replace(' ', '_')
-        return user_name_without_spaces
-
-    def _message(self, message):
-        self.testshell_api.WriteMessageToReservationOutput(self.reservation.id, message)
+    @staticmethod
+    def _message(message, reservation_id, api):
+        api.WriteMessageToReservationOutput(reservation_id, message)
 
 ###############################################
 ###############################################

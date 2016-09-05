@@ -2,6 +2,7 @@ from cloudshell.traffic.teravm.common import i18n as c
 from cloudshell.traffic.teravm.controller.teravm_executive_helper import get_interface_tvm_resource_ids, \
     unregister_interfaces_in_pool_manager
 import re
+from debug_utils import debugger
 
 
 def cleanup(vm_resource):
@@ -11,12 +12,16 @@ def cleanup(vm_resource):
     """
     tvm_e_address = vm_resource.attributes[c.ATTRIBUTE_NAME_TVM_EXECUTIVE]
 
-    if vm_resource.model == c.TEST_MODULE_MODEL \
-            and _is_mac(vm_resource.address) \
-            and _is_ip(tvm_e_address):
-        resource_ids = get_interface_tvm_resource_ids([vm_resource.address], tvm_e_address)
-        unregister_interfaces_in_pool_manager(resource_ids, tvm_e_address)
-    return ''
+    try:
+        if vm_resource.model == c.TEST_MODULE_MODEL \
+                and _is_mac(vm_resource.address) \
+                and _is_ip(tvm_e_address):
+            resource_ids = get_interface_tvm_resource_ids([vm_resource.address], tvm_e_address)
+            unregister_interfaces_in_pool_manager(resource_ids, tvm_e_address)
+        return ''
+    except ValueError:
+        raise Exception('No response from TeraVM Executive at {0}. \nCould not unregister {1} '
+                        'with mac {2}'.format(tvm_e_address, c.TEST_MODULE_MODEL, vm_resource.address))
 
 
 def _is_mac(candidate):

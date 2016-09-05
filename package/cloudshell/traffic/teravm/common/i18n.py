@@ -38,6 +38,7 @@ KEY_LICENSE_SERVER = 'tvm_license_server'
 KEY_INDEX_POOL = 'index_pool_key'
 KEY_STARTING_INDEX = 'starting_index'
 KEY_PORTS_LOGICAL_NAMES = 'ports_logical_names'
+KEY_EXECUTIVE_ADDRESS = 'tvm_executive_address'
 
 # ---------------- DEFAULTS ----------------------#
 

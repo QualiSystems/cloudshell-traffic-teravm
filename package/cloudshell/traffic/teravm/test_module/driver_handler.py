@@ -84,8 +84,6 @@ class TestModuleHandler:
         if not connectors:
             return 'Success'
 
-        debugger.attach_debugger()
-
         ports = TestModuleHandler._get_test_ports(resource)
 
         to_disconnect = []
