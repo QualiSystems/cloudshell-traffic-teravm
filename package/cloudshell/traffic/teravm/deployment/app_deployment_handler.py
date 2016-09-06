@@ -11,7 +11,8 @@ class AppDeploymentHandler:
     def __init__(self):
         pass
 
-    def deploy(self, context, Name=None):
+    @staticmethod
+    def deploy(context, Name=None):
         """ Deploys a TeraVM entity - a controller or a test module
 
         :type context: cloudshell.shell.core.driver_context.ResourceCommandContext

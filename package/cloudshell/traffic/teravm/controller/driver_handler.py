@@ -17,8 +17,6 @@ from cloudshell.traffic.teravm.common import i18n as c
 from cloudshell.traffic.teravm.controller.port_selector_helper import *
 from cloudshell.traffic.teravm.controller.teravm_executive_helper import *
 
-from debug_utils import debugger
-
 CLOUDSHELL_TEST_CONFIGURATION = 'CloudshellConfiguration'
 
 
@@ -40,12 +38,6 @@ class TVMControllerHandler:
     def __init__(self, cli_service):
         self.cli = cli_service
 
-    def preview_configuration(self, context, test_location):
-        # api = get_cloudshell_session(context)
-        # debugger.attach_debugger()
-        # self.uploaded_test_name, file_name = self._prepare_test_group_file(test_location)
-        pass
-
     def load_configuration(self, context, test_location):
         api = get_cloudshell_session(context)
         reservation_id = context.reservation.reservation_id
@@ -63,14 +55,24 @@ class TVMControllerHandler:
         try:
             self._start_test_group(CLOUDSHELL_TEST_CONFIGURATION, context.reservation.owner_user, reservation_id, api)
         except Exception as e:
-            self._cancel_start_test_group_gracefully(e, CLOUDSHELL_TEST_CONFIGURATION, context.reservation.owner_user,
-                                                     reservation_id, api)
+            self.prettify_exception(e)
+
+    @staticmethod
+    def prettify_exception(e):
+        if len(e.args) > 1:
+            try:
+                e = Exception('\n'.join(e.args))
+            except:
+                pass
+        raise e
 
     def stop_test(self, context):
         api = get_cloudshell_session(context)
         reservation_id = context.reservation.reservation_id
         self.cli.send_command('cli -u {0} stopTestGroup //{1}'.format(context.reservation.owner_user,
-                                                                      CLOUDSHELL_TEST_CONFIGURATION))
+                                                                      CLOUDSHELL_TEST_CONFIGURATION),
+                              retries=1,
+                              timeout=90)
         self._message('+ Stopped ' + CLOUDSHELL_TEST_CONFIGURATION, reservation_id, api)
 
     def run_custom_command(self, context, command_text):
@@ -98,7 +100,7 @@ class TVMControllerHandler:
         return AutoLoadDetails([], [])
 
     def _start_test_group(self, test_name, user_name, reservation_id, api):
-        self.cli.send_command('cli -u {0} startTestGroup //{1}'.format(user_name, test_name))
+        self.cli.send_command('cli -u {0} startTestGroup //{1}'.format(user_name, test_name), retries=1, timeout=90)
         self._message('Started ' + test_name, reservation_id, api)
 
     def _import_test_group(self, file_name, user_name, reservation_id, api):
@@ -139,7 +141,7 @@ class TVMControllerHandler:
     def _cancel_start_test_group_gracefully(self, e, test_name, user_name, reservation_id, api):
         try:
             self._message('~ An error occurred, stopping test. Please contact your administrator', reservation_id, api)
-            self.cli.send_command('cli -u {0} stopTestGroup {1}'.format(user_name, test_name))
+            self.cli.send_command('cli -u {0} stopTestGroup {1}'.format(user_name, test_name), retries=1, timeout=90)
             self._message('~ Test execution cancelled.', reservation_id, api)
         finally:
             if len(e.args) > 1:
@@ -223,6 +225,12 @@ class TVMControllerHandler:
         return test_group_name
 
     def _generate_test_file_with_replaced_interfaces(self, test_file_path, ports):
+        config = self._generate_test_configuration_with_replaced_interfaces(test_file_path, ports)
+        temp_file_path = tempfile.mktemp()
+        config.write(temp_file_path)
+        return temp_file_path
+
+    def _generate_test_configuration_with_replaced_interfaces(self, test_file_path, ports):
         tree = ET.parse(test_file_path)
         root = tree.getroot()
 
@@ -246,10 +254,7 @@ class TVMControllerHandler:
         name = root.find('./test_group/name')
         name.text = CLOUDSHELL_TEST_CONFIGURATION
 
-        temp_file_path = tempfile.mktemp()
-        tree.write(temp_file_path)
-        # self._message('+ Test configuration based on available test interfaces generated')
-        return temp_file_path
+        return tree
 
     @staticmethod
     def _get_interface_elements_from_xml(root):

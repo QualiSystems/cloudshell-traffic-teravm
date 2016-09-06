@@ -1,5 +1,6 @@
 import json
 import re
+import uuid
 from pyVim.connect import SmartConnect, Disconnect
 
 from cloudshell.cp.vcenter.common.vcenter.vmomi_service import pyVmomiService
@@ -39,8 +40,9 @@ class TeraVMManagementAssistantDriverHandler:
         conf = DeploymentConfiguration(app_request, tvm_ma_model, starting_index).to_dict()
 
         ma = TVMManagerController(tvm_ma_model.host_address)
-        ma.set_configuration(conf)
-        deploy_output = ma.deploy()
+        deployment_file_path = '/tmp/{0}'.format(uuid.uuid4())
+        ma.set_configuration(conf, deployment_file_path)
+        deploy_output = ma.deploy(deployment_file_path)
 
         try:
             deployed_vm_name = re.findall('Calling Object: (.*) Action: PowerOnVM', deploy_output)[0]
