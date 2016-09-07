@@ -5,6 +5,7 @@
 	    </Category>
 		<Category Name="Hidden Commands">
 			<Command Description="" Name="connect_child_resources" DisplayName="Connect Child Resources" Tags="" />
+			<Command Description="" DisplayName="Delete VM Only" Name="destroy_vm_only" Tags="" />
 		</Category>
     </Layout>
 </Driver>

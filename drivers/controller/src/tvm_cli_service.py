@@ -13,3 +13,6 @@ class TvmCliService(CliService):
             session.connect()
         scp = SCPClient(session._handler.get_transport())
         scp.put(local_path, remote_path)
+
+    def rollback(self, expected_map=None):
+        pass

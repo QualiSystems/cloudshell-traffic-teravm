@@ -2,11 +2,13 @@
   <dictionary name="nahum-t">
     <words>
       <w>attribs</w>
+      <w>cobham</w>
       <w>datacenter</w>
       <w>jsonstr</w>
       <w>paramiko</w>
       <w>pyvmomi</w>
       <w>tvmma</w>
+      <w>unregister</w>
       <w>vmuid</w>
       <w>vnic</w>
     </words>

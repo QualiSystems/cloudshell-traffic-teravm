@@ -6,11 +6,6 @@
 	                <Parameter Name="test_location" DisplayName="Test Location" Type="String" Mandatory="True" />
 	            </Parameters>
 	        </Command>
-			<Command Description="" Name="preview_configuration" DisplayName="Preview Configuration" Tags="" >
-				<Parameters>
-	                <Parameter Name="test_location" DisplayName="Test Location" Type="String" Mandatory="True" />
-	            </Parameters>
-	        </Command>
 			<Command Description="" Name="run_test" DisplayName="Run Test" Tags="" />
 	        <Command Description="" Name="stop_test" DisplayName="Stop Test" Tags="" />
 			<Command Description="" Name="get_inventory" DisplayName="Autoload" Tags="" />

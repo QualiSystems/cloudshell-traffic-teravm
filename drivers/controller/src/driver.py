@@ -26,10 +26,6 @@ class TeraVMController:
         return self.handler.load_configuration(context, test_location)
 
     @context_from_args
-    def preview_configuration(self, context, test_location):
-        return self.handler.preview_configuration(context, test_location)
-
-    @context_from_args
     def run_test(self, context):
         return self.handler.run_test(context)
 

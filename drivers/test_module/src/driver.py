@@ -33,3 +33,7 @@ class TeraVMTestModuleDriver(ResourceDriverInterface):
         :rtype: str
         """
         return self.handler.connect_child_resources(context)
+
+    @context_from_args
+    def destroy_vm_only(self, context):
+        return self.handler.destroy_vm_only(context)
