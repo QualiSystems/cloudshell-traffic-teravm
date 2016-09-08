@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataModelInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.qualisystems.com/ResourceManagement/DataModelSchema.xsd">
+  <Attributes>
+    <AttributeInfo Name="TVM License Server" Type="String" DefaultValue="" IsReadOnly="false" IsCommand="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Ports Logical Names" Type="String" DefaultValue="" IsReadOnly="false" IsCommand="false">
+      <Rules />
+    </AttributeInfo>
+    <AttributeInfo Name="Number of Ports" Type="Numeric" DefaultValue="0" IsReadOnly="false" IsCommand="false">
+      <Rules>
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="vCenter Name" Type="String" DefaultValue="" IsReadOnly="false" IsCommand="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="TVM MA Name" Type="String" DefaultValue="" IsReadOnly="false" IsCommand="false">
+      <Rules />
+    </AttributeInfo>
+    <AttributeInfo Name="Wait for IP" Type="Boolean" DefaultValue="False" IsReadOnly="false" IsCommand="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Refresh IP Timeout" Type="Numeric" DefaultValue="600" IsReadOnly="false" IsCommand="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Auto Power On" Type="Boolean" DefaultValue="True" IsReadOnly="false" IsCommand="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Auto Power Off" Type="Boolean" DefaultValue="True" IsReadOnly="false" IsCommand="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Auto Delete" Type="Boolean" DefaultValue="True" IsReadOnly="false" IsCommand="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Management Network" Type="String" DefaultValue="" Description="Select a network from the existing networks to be the Management Network." IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Available For Abstract Resources" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="TVM Executive Address" Type="String" DefaultValue="" Description="IP address of TVM-E" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="VM Location" Type="String" DefaultValue="" Description="The full path to the folder within vCenter in which the VM will be created. (e.g vms/quali) " IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Holding Network" Type="String" DefaultValue="" Description="The default network that will be configured when disconnecting from another network. Should be under the Default Datacenter." IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Default Datacenter" Type="String" DefaultValue="" Description="The datacenter within the vCenter that will be used for VM deployment. All other settings of this vCenter resource should refer to entities associated with this datacenter." IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Logical Name" Type="String" DefaultValue="" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="User" Type="String" DefaultValue="" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Password" Type="Password" DefaultValue="3M3u7nkDzxWb0aJ/IZYeWw==" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="VM Storage" Type="String" DefaultValue="" Description="Can be either s LUN or a storage cluster. It has to br the full path (not including the Datacenter)" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Default dvSwitch" Type="String" DefaultValue="" Description="The default vCenter dvSwitch that will be used when configuring VM connectivity. Should be under the Default Datacenter." IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="VM Cluster" Type="String" DefaultValue="" Description="The vCenter cluster or host that will be used when deploying a VM. Should be under the Default Datacenter." IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="VM Resource Pool" Type="String" DefaultValue="" Description="The vCenter Resource Pool in which the VM will be created. Should be under the defined VM Cluster (optional)." IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Shutdown Method" Type="String" DefaultValue="" Description="The shutdown method that will be used when powering off the VM. Possible options are 'Hard' and 'Soft' shutdown." IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Execution Server Selector" Type="String" DefaultValue="" Description="This attribute points to a pre-define group of execution servers. Usually used for different sites or domains." IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+        <Rule Name="Execution Server Selector" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="OVF Tool Path" Type="String" DefaultValue="" Description="The path for the OVF tool installation. Use the same path for all execution servers." IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Reserved Networks" Type="String" DefaultValue="" Description="Reserved networks separated by Semicolon(;), vNICs configured to those networks won't be used for VM connectivity." IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo xsi:type="LookupAttributeDetails" Name="CLI Connection Type" Type="Lookup" DefaultValue="Auto" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+      </Rules>
+      <LookupValues>
+        <LookupValue NumericValue="0" StringValue="Auto" />
+        <LookupValue NumericValue="1" StringValue="Console" />
+        <LookupValue NumericValue="2" StringValue="SSH" />
+        <LookupValue NumericValue="3" StringValue="Telnet" />
+        <LookupValue NumericValue="4" StringValue="TCP" />
+      </LookupValues>
+    </AttributeInfo>
+    <AttributeInfo xsi:type="LookupAttributeDetails" Name="TVM Test Module Type" Type="Lookup" DefaultValue="TVM-1" IsReadOnly="false">
+      <Rules />
+      <LookupValues>
+        <LookupValue NumericValue="0" StringValue="TVM-1" />
+        <LookupValue NumericValue="1" StringValue="TVM-2" />
+        <LookupValue NumericValue="2" StringValue="TVM-3" />
+        <LookupValue NumericValue="3" StringValue="TVM-4" />
+        <LookupValue NumericValue="4" StringValue="TVM-5" />
+        <LookupValue NumericValue="5" StringValue="TVM-6" />
+        <LookupValue NumericValue="6" StringValue="TVM-7" />
+      </LookupValues>
+    </AttributeInfo>
+    <AttributeInfo Name="TVM Comms Default Network" Type="String" DefaultValue="" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Requested vNIC Name" Type="String" DefaultValue="" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Configuration" />
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+  </Attributes>
+  <ResourceFamilies>
+    <ResourceFamily Description="" IsService="true" Name="Deployment Options" ServiceType="Deployment">
+      <AttachedAttributes />
+      <AttributeValues />
+      <Models>
+        <ResourceModel Name="vCenter TeraVM Test Module" Description="" SupportsConcurrentCommands="false">
+          <AttachedAttributes>
+            <AttachedAttribute Name="Auto Power On" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Refresh IP Timeout" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Wait for IP" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Auto Power Off" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Auto Delete" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="TVM MA Name" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="vCenter Name" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Number of Ports" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Ports Logical Names" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+          </AttachedAttributes>
+          <AttributeValues>
+            <AttributeValue Name="Auto Power Off" Value="False" />
+            <AttributeValue Name="Auto Delete" Value="False" />
+            <AttributeValue Name="TVM MA Name" Value="" />
+            <AttributeValue Name="vCenter Name" Value="" />
+            <AttributeValue Name="Number of Ports" Value="2" />
+            <AttributeValue Name="Wait for IP" Value="False" />
+            <AttributeValue Name="Auto Power On" Value="False" />
+            <AttributeValue Name="Ports Logical Names" Value="" />
+            <AttributeValue Name="Refresh IP Timeout" Value="600" />
+          </AttributeValues>
+          <ParentModels />
+          <Drivers>
+            <DriverName>Deploy TeraVM Instance</DriverName>
+          </Drivers>
+        </ResourceModel>
+        <ResourceModel Name="vCenter TeraVM Controller" Description="" SupportsConcurrentCommands="false">
+          <AttachedAttributes>
+            <AttachedAttribute Name="TVM License Server" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Wait for IP" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Refresh IP Timeout" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Auto Power On" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Auto Power Off" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Auto Delete" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="TVM MA Name" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="vCenter Name" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+          </AttachedAttributes>
+          <AttributeValues>
+            <AttributeValue Name="Wait for IP" Value="False" />
+            <AttributeValue Name="vCenter Name" Value="" />
+            <AttributeValue Name="TVM MA Name" Value="" />
+            <AttributeValue Name="Auto Power Off" Value="False" />
+            <AttributeValue Name="Auto Delete" Value="False" />
+            <AttributeValue Name="Refresh IP Timeout" Value="600" />
+            <AttributeValue Name="Auto Power On" Value="False" />
+            <AttributeValue Name="TVM License Server" Value="192.168.30.89" />
+          </AttributeValues>
+          <ParentModels />
+          <Drivers>
+            <DriverName>Deploy TeraVM Instance</DriverName>
+          </Drivers>
+        </ResourceModel>
+       
+      </Models>
+      <Categories>
+      </Categories>
+    </ResourceFamily>
+    <ResourceFamily Name="Generic App Family" IsLockedByDefault="true" Description="" IsSearchable="true" ResourceType="Application">
+      <AttachedAttributes />
+      <AttributeValues />
+      <Models>
+        <ResourceModel Name="TeraVM Controller" Description="" SupportsConcurrentCommands="false">
+          <AttachedAttributes>
+            <AttachedAttribute Name="User" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Password" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="CLI Connection Type" IsOverridable="true" IsLocal="true">
+              <AllowedValues>
+                <AllowedValue>SSH</AllowedValue>
+              </AllowedValues>
+            </AttachedAttribute>
+            <AttachedAttribute Name="TVM Executive Address" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+          </AttachedAttributes>
+          <AttributeValues>
+            <AttributeValue Name="User" Value="cli" />
+            <AttributeValue Name="Password" Value="q6/KiI8OvQpuAsgSL+pG8w==" />
+            <AttributeValue Name="CLI Connection Type" Value="SSH" />
+            <AttributeValue Name="TVM Executive Address" Value="" />
+          </AttributeValues>
+          <ParentModels />
+          <Drivers>
+            <DriverName>TeraVM Controller</DriverName>
+          </Drivers>
+          <Scripts />
+        </ResourceModel>
+        <ResourceModel Name="TeraVM Test Module" Description="" SupportsConcurrentCommands="false">
+          <AttachedAttributes>
+            <AttachedAttribute Name="TVM Executive Address" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="TVM Test Module Type" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+          </AttachedAttributes>
+          <AttributeValues>
+            <AttributeValue Name="TVM Executive Address" Value="" />
+            <AttributeValue Name="TVM Test Module Type" Value="TVM-1" />
+          </AttributeValues>
+          <ParentModels />
+          <Drivers>
+            <DriverName>TeraVM Test Module</DriverName>
+          </Drivers>
+          <Scripts />
+        </ResourceModel>
+      </Models>
+      <Categories />
+    </ResourceFamily>
+    <ResourceFamily Name="Apps Orchestration" Description="" IsService="true" ServiceType="Orchestration">
+      <AttachedAttributes />
+      <AttributeValues />
+      <Models>
+        <ResourceModel Name="Simple" Description="" SupportsConcurrentCommands="false">
+          <AttachedAttributes />
+          <AttributeValues />
+          <ParentModels />
+          <Drivers>
+            <DriverName>Deployment Orchestrator</DriverName>
+          </Drivers>
+          <Scripts />
+        </ResourceModel>
+      </Models>
+      <Categories />
+    </ResourceFamily>
+    <ResourceFamily Name="Cloud Provider" Description="" IsSearchable="true" IsAdminOnly="true" ResourceType="Resource">
+      <AttachedAttributes />
+      <AttributeValues />
+      <Models>
+        <ResourceModel Name="VMware vCenter" ImagePath="VMware vCenter_Model.png" Description="" SupportsConcurrentCommands="true">
+          <AttachedAttributes>
+            <AttachedAttribute Name="User" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Password" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Default Datacenter" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="VM Storage" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Holding Network" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="VM Location" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Default dvSwitch" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="VM Cluster" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="VM Resource Pool" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Shutdown Method" IsOverridable="true" IsLocal="true">
+              <AllowedValues>
+                <AllowedValue>hard</AllowedValue>
+                <AllowedValue>soft</AllowedValue>
+              </AllowedValues>
+            </AttachedAttribute>
+            <AttachedAttribute Name="Execution Server Selector" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="OVF Tool Path" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Reserved Networks" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+          </AttachedAttributes>
+          <AttributeValues>
+            <AttributeValue Name="User" Value="" />
+            <AttributeValue Name="Password" Value="3M3u7nkDzxWb0aJ/IZYeWw==" />
+            <AttributeValue Name="Default Datacenter" Value="" />
+            <AttributeValue Name="VM Storage" Value="" />
+            <AttributeValue Name="Holding Network" Value="holding" />
+            <AttributeValue Name="VM Location" Value="QualiSystems" />
+            <AttributeValue Name="Default dvSwitch" Value="" />
+            <AttributeValue Name="VM Cluster" Value="" />
+            <AttributeValue Name="VM Resource Pool" Value="" />
+            <AttributeValue Name="Shutdown Method" Value="hard" />
+            <AttributeValue Name="Execution Server Selector" Value="" />
+            <AttributeValue Name="OVF Tool Path" Value="C:\Program Files (x86)\VMware\VMware Workstation\OVFTool\ovftool.exe" />
+            <AttributeValue Name="Reserved Networks" Value="" />
+          </AttributeValues>
+          <ParentModels />
+          <Drivers>
+            <DriverName>VCenter Shell Driver</DriverName>
+          </Drivers>
+          <Scripts />
+        </ResourceModel>
+      </Models>
+      <Categories />
+    </ResourceFamily>
+    <ResourceFamily Name="TeraVM Management Assistant" Description="A VM that handles deployment of TeraVM entities" IsSearchable="true" ResourceType="Resource">
+      <AttachedAttributes>
+        <AttachedAttribute Name="Management Network" IsOverridable="true" IsLocal="true">
+          <AllowedValues />
+        </AttachedAttribute>
+        <AttachedAttribute Name="TVM Executive Address" IsOverridable="true" IsLocal="true">
+          <AllowedValues />
+        </AttachedAttribute>
+        <AttachedAttribute Name="VM Location" IsOverridable="true" IsLocal="true">
+          <AllowedValues />
+        </AttachedAttribute>
+        <AttachedAttribute Name="Holding Network" IsOverridable="true" IsLocal="true">
+          <AllowedValues />
+        </AttachedAttribute>
+        <AttachedAttribute Name="Default Datacenter" IsOverridable="true" IsLocal="true">
+          <AllowedValues />
+        </AttachedAttribute>
+      </AttachedAttributes>
+      <AttributeValues>
+        <AttributeValue Name="Management Network" Value="" />
+        <AttributeValue Name="TVM Executive Address" Value="" />
+        <AttributeValue Name="VM Location" Value="" />
+        <AttributeValue Name="Holding Network" Value="" />
+        <AttributeValue Name="Default Datacenter" Value="" />
+      </AttributeValues>
+      <Models>
+        <ResourceModel Name="TeraVM Management Assistant Model" Description="" SupportsConcurrentCommands="true">
+          <AttachedAttributes>
+            <AttachedAttribute Name="TVM Comms Default Network" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Default dvSwitch" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="VM Cluster" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="VM Storage" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+          </AttachedAttributes>
+          <AttributeValues>
+            <AttributeValue Name="TVM Comms Default Network" Value="" />
+            <AttributeValue Name="Default dvSwitch" Value="" />
+            <AttributeValue Name="VM Cluster" Value="" />
+            <AttributeValue Name="VM Storage" Value="" />
+            <AttributeValue Name="Management Network" Value="" />
+            <AttributeValue Name="TVM Executive Address" Value="" />
+            <AttributeValue Name="VM Location" Value="" />
+            <AttributeValue Name="Holding Network" Value="" />
+            <AttributeValue Name="Default Datacenter" Value="" />
+          </AttributeValues>
+          <ParentModels />
+          <Drivers>
+            <DriverName>TeraVM Management Assistant</DriverName>
+          </Drivers>
+          <Scripts />
+        </ResourceModel>
+      </Models>
+      <Categories />
+    </ResourceFamily>
+    <ResourceFamily Name="Virtual Traffic Generator Port" IsConnectable="true" IsLockedByDefault="true" Description="" IsSearchable="true" ResourceType="Application">
+      <AttachedAttributes>
+        <AttachedAttribute Name="Logical Name" IsOverridable="true" IsLocal="true">
+          <AllowedValues />
+        </AttachedAttribute>
+      </AttachedAttributes>
+      <AttributeValues>
+        <AttributeValue Name="Logical Name" Value="" />
+      </AttributeValues>
+      <Models>
+        <ResourceModel Name="TeraVM Interface" Description="" SupportsConcurrentCommands="false">
+          <AttachedAttributes>
+            <AttachedAttribute Name="Requested vNIC Name" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+          </AttachedAttributes>
+          <AttributeValues>
+            <AttributeValue Name="Requested vNIC Name" Value="" />
+            <AttributeValue Name="Logical Name" Value="" />
+          </AttributeValues>
+          <ParentModels>
+            <ParentModelName>TeraVM Test Module</ParentModelName>
+          </ParentModels>
+          <Drivers />
+          <Scripts />
+        </ResourceModel>
+      </Models>
+      <Categories />
+    </ResourceFamily>
+  </ResourceFamilies>
+  <DriverDescriptors>
+    <DriverDescriptor Name="Deployment Orchestrator" Description="Deploy App" DriverType="PythonDriver" />
+    <DriverDescriptor Name="VCenter Shell Driver" Description="this driver manage all the commands that runs at the vcenter context" DriverType="PythonDriver" />
+    <DriverDescriptor Name="TeraVM Test Module" Description="TeraVM Test Module" DriverType="PythonDriver" />
+    <DriverDescriptor Name="TeraVM Management Assistant" Description="TeraVM Management Assistant" DriverType="PythonDriver" />
+    <DriverDescriptor Name="TeraVM Controller" Description="TeraVM Controller" DriverType="PythonDriver" />
+    <DriverDescriptor Name="Python Setup &amp; Teardown" Description="This driver is used for running Python scripts in the environment setup and teardown. To use this driver, make sure you select a suitable setup and/or teardown script." DriverType="TestShellDriver" />
+    <DriverDescriptor Name="Deploy TeraVM Instance" Description="Deploy TeraVm Instance" DriverType="PythonDriver" />
+  </DriverDescriptors>
+  <ScriptDescriptors>
+    <ScriptDescriptor Name="Default Sandbox Setup" CategoryName="Hidden Commands" Version="1.0.28 " Alias="Setup script">
+      <ScriptInputs />
+    </ScriptDescriptor>
+    <ScriptDescriptor Name="Default Sandbox Teardown" CategoryName="Hidden Commands" Version="1.0.28 " Alias="Teardown script">
+      <ScriptInputs />
+    </ScriptDescriptor>
+  </ScriptDescriptors>
+</DataModelInfo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AppTemplateInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AppResourceInfo Name="TeraVM Test Module">
+    <AppResources>
+      <AppResource ModelName="TeraVM Test Module" Driver="TeraVM Test Module">
+        <Attributes>
+          <Attribute Name="TVM Executive Address" Value="192.168.65.22" />
+          <Attribute Name="TVM Test Module Type" Value="TVM-1" />
+        </Attributes>
+      </AppResource>
+    </AppResources>
+    <DeploymentPaths>
+      <DeploymentPath Name="vCenter TeraVM Test Module" Default="true">
+        <DeploymentService Name="vCenter TeraVM Test Module">
+          <Attributes>
+            <Attribute Name="Auto Power On" Value="True" />
+            <Attribute Name="Refresh IP Timeout" Value="600" />
+            <Attribute Name="Wait for IP" Value="False" />
+            <Attribute Name="Auto Power Off" Value="True" />
+            <Attribute Name="Auto Delete" Value="True" />
+            <Attribute Name="TVM MA Name" Value="TVM Management Assistant" />
+            <Attribute Name="vCenter Name" Value="vCenter Cloud Provider" />
+            <Attribute Name="Number of Ports" Value="2" />
+            <Attribute Name="Ports Logical Names" Value="" />
+          </Attributes>
+        </DeploymentService>
+      </DeploymentPath>
+    </DeploymentPaths>
+  </AppResourceInfo>
+  <Categories>
+    <Category>Applications</Category>
+  </Categories>
+</AppTemplateInfo>

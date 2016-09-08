@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="vCenter Cloud Provider" FolderFullPath="" Address="192.168.42.110" ModelName="VMware vCenter" Driver="VCenter Shell Driver" xmlns="http://schemas.qualisystems.com/ResourceManagement/ResourceSchema.xsd">
+  <Attributes>
+    <Attribute Name="User" Value="qualisystems\nahum-t" />
+    <Attribute Name="Password" Value="KVbQw7bT6xcel+8BxGpJgg==" />
+    <Attribute Name="Default Datacenter" Value="QualiSB" />
+    <Attribute Name="VM Storage" Value="" />
+    <Attribute Name="Holding Network" Value="HOLDING" />
+    <Attribute Name="VM Location" Value="Qualisystems" />
+    <Attribute Name="Default dvSwitch" Value="dvSwitch" />
+    <Attribute Name="VM Cluster" Value="" />
+    <Attribute Name="VM Resource Pool" Value="" />
+    <Attribute Name="Shutdown Method" Value="hard" />
+    <Attribute Name="Execution Server Selector" Value="" />
+    <Attribute Name="OVF Tool Path" Value="C:\Program Files (x86)\VMware\VMware Workstation\OVFTool\ovftool.exe" />
+    <Attribute Name="Reserved Networks" Value="" />
+  </Attributes>
+  <ChildResources />
+  <Connections />
+</ResourceInfo>

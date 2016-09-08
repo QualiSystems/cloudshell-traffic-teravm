@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="TVM Management Assistant" FolderFullPath="" Address="192.168.26.28" ModelName="TeraVM Management Assistant Model" Description="SB-DS2&#xD;&#xA;192.168.42.114" Driver="TeraVM Management Assistant" xmlns="http://schemas.qualisystems.com/ResourceManagement/ResourceSchema.xsd">
+  <Attributes>
+    <Attribute Name="VM Cluster" Value="192.168.42.114" />
+    <Attribute Name="VM Storage" Value="SB-DS2" />
+    <Attribute Name="TVM Executive Address" Value="192.168.65.47" />
+    <Attribute Name="Management Network" Value="vlan65" />
+    <Attribute Name="VM Location" Value="Nachum/Superlolz" />
+    <Attribute Name="Holding Network" Value="HOLDING_b" />
+    <Attribute Name="Default Datacenter" Value="QualiSB" />
+    <Attribute Name="TVM Comms Default Network" Value="tvm_comms_12.1" />
+    <Attribute Name="Default dvSwitch" Value="PRODUCTION" />
+  </Attributes>
+  <ChildResources />
+  <Connections />
+</ResourceInfo>
