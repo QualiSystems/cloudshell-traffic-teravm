@@ -2,7 +2,6 @@ from cloudshell.traffic.teravm.common import i18n as c
 from cloudshell.traffic.teravm.controller.teravm_executive_helper import get_interface_tvm_resource_ids, \
     unregister_interfaces_in_pool_manager
 import re
-from debug_utils import debugger
 
 
 def cleanup(vm_resource):

@@ -8,7 +8,6 @@ from cloudshell.traffic.teravm.common.cloudshell_helper import get_cloudshell_se
 from cloudshell.api.cloudshell_api import SetConnectorRequest
 from cloudshell.traffic.teravm.common.parsing_utilities import to_int_or_maxint
 from cloudshell.traffic.teravm.common.vsphere_helper import get_vsphere_credentials
-from debug_utils import debugger
 
 
 class TestModuleHandler:
