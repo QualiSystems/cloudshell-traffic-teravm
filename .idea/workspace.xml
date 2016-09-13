@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="259b21ce-2bd0-4530-867f-ed0700cd499e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/Resources/TVM Management Assistant.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/Resources/TeraVM Controller.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/Resources/TeraVM Test Module.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/Resources/vCenter Cloud Provider.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/Topologies/TeraVM environment.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/App Templates/TeraVM Controller.xml" afterPath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/App Templates/TeraVM Controller.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/App Templates/TeraVM Test Module.xml" afterPath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/App Templates/TeraVM Test Module.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/DataModel/datamodel.xml" afterPath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/DataModel/datamodel.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/metadata.xml" afterPath="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/metadata.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/drivers/controller/src/requirements.txt" afterPath="$PROJECT_DIR$/drivers/controller/src/requirements.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/drivers/deployment_drivers/teravm_instance/requirements.txt" afterPath="$PROJECT_DIR$/drivers/deployment_drivers/teravm_instance/requirements.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/drivers/teravm_management_assistant/src/requirements.txt" afterPath="$PROJECT_DIR$/drivers/teravm_management_assistant/src/requirements.txt" />
     </list>
     <ignored path="cloudshell-traffic-teravm.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -88,11 +80,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/drivers/deployment_drivers/teravm_instance/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/drivers/controller/src/requirements.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/drivers/teravm_management_assistant/src/requirements.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/drivers/test_module/src/requirements.txt">
+          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.037162162">
-              <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+              <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -116,38 +138,6 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cloudshell_helper.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../7.1/Drop/TestShell/ExecutionServer/python/2.7.10/Lib/site-packages/cloudshell_traffic_teravm-1.0.0-py2.7.egg/cloudshell/traffic/teravm/common/cloudshell_helper.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="51" selection-start-line="20" selection-start-column="51" selection-end-line="20" selection-end-column="51" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="debugger.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../7.1/Drop/TestShell/ExecutionServer/python/2.7.10/Lib/site-packages/debug_utils/debugger.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="90" selection-start-line="7" selection-start-column="90" selection-end-line="7" selection-end-column="90" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="driver_handler.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../7.1/Drop/TestShell/ExecutionServer/python/2.7.10/Lib/site-packages/cloudshell_traffic_teravm-1.0.0-py2.7.egg/cloudshell/traffic/teravm/test_module/driver_handler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="150" column="72" selection-start-line="150" selection-start-column="72" selection-end-line="150" selection-end-column="72" />
-              <folding>
-                <element signature="e#0#50#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -185,7 +175,6 @@
         <option value="$PROJECT_DIR$/../../7.0/Drop/TestShell/ExecutionServer/python/2.7.10/Lib/site-packages/cloudshell_traffic_teravm-1.0.0-py2.7.egg/cloudshell/traffic/teravm/deployment/app_deployment_handler.py" />
         <option value="$PROJECT_DIR$/../../7.1/Drop/TestShell/ExecutionServer/python/2.7.10/Lib/site-packages/cloudshell_traffic_teravm-1.0.0-py2.7.egg/cloudshell/traffic/teravm/deployment/app_deployment_handler.py" />
         <option value="$PROJECT_DIR$/../../7.1/Drop/TestShell/ExecutionServer/python/2.7.10/Lib/site-packages/cloudshell/shell/core/context_utils.py" />
-        <option value="$PROJECT_DIR$/drivers/teravm_management_assistant/src/requirements.txt" />
         <option value="$PROJECT_DIR$/package/requirements.txt" />
         <option value="$PROJECT_DIR$/drivers/test_module/src/requirements.txt" />
         <option value="$PROJECT_DIR$/package/cloudshell/traffic/teravm/controller/tvm_controller_handler.py" />
@@ -210,14 +199,15 @@
         <option value="$PROJECT_DIR$/package/cloudshell/traffic/teravm/management_assistant/tvm_ma.py" />
         <option value="$PROJECT_DIR$/drivers/controller/src/drivermetadata.xml" />
         <option value="$PROJECT_DIR$/drivers/controller/src/driver.py" />
-        <option value="$PROJECT_DIR$/drivers/controller/src/requirements.txt" />
         <option value="$PROJECT_DIR$/drivers/controller/src/tvm_cli_service.py" />
         <option value="$PROJECT_DIR$/drivers/controller/src/tvm_controller_config.py" />
         <option value="$PROJECT_DIR$/package/cloudshell/traffic/teravm/controller/driver_handler.py" />
         <option value="$PROJECT_DIR$/package/cloudshell/traffic/teravm/cleanup/app_cleanup_handler.py" />
         <option value="$PROJECT_DIR$/package/cloudshell/traffic/teravm/test_module/driver_handler.py" />
         <option value="$PROJECT_DIR$/cloudshell_traffic_teravm_Package/DataModel/datamodel.xml" />
+        <option value="$PROJECT_DIR$/drivers/teravm_management_assistant/src/requirements.txt" />
         <option value="$PROJECT_DIR$/drivers/deployment_drivers/teravm_instance/requirements.txt" />
+        <option value="$PROJECT_DIR$/drivers/controller/src/requirements.txt" />
       </list>
     </option>
   </component>
@@ -303,6 +293,50 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="test_module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cloudshell-traffic-teravm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cloudshell-traffic-teravm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drivers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="teravm_management_assistant" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cloudshell-traffic-teravm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cloudshell-traffic-teravm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drivers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="deployment_drivers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -326,6 +360,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cloudshell-traffic-teravm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cloudshell-traffic-teravm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drivers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -822,24 +878,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../7.1/Drop/TestShell/ExecutionServer/python/2.7.10/Lib/site-packages/debug_utils/debugger.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="90" selection-start-line="7" selection-start-column="90" selection-end-line="7" selection-end-column="90" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../7.1/Drop/TestShell/ExecutionServer/python/2.7.10/Lib/site-packages/cloudshell_traffic_teravm-1.0.0-py2.7.egg/cloudshell/traffic/teravm/test_module/driver_handler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="150" column="72" selection-start-line="150" selection-start-column="72" selection-end-line="150" selection-end-column="72" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package/cloudshell/traffic/teravm/models/tvm_request.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1067,13 +1105,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/drivers/controller/src/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../7.1/Drop/TestShell/ExecutionServer/python/2.7.10/Lib/site-packages/cloudshell/cli/session/session_proxy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1228,18 +1259,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package/cloudshell/traffic/teravm/test_module/driver_handler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-            <element signature="e#6658#7557#0" expanded="false" />
-            <element signature="e#7620#7844#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cloudshell_traffic_teravm_Package/DataModel/datamodel.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-73.965515">
@@ -1274,10 +1293,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package/cloudshell/traffic/teravm/test_module/driver_handler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+            <element signature="e#6658#7557#0" expanded="false" />
+            <element signature="e#7620#7844#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/drivers/teravm_management_assistant/src/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/drivers/deployment_drivers/teravm_instance/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/drivers/controller/src/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/drivers/test_module/src/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.037162162">
-          <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+          <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
           <folding />
         </state>
       </provider>
