@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DataModelInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.qualisystems.com/ResourceManagement/DataModelSchema.xsd">
   <Attributes>
+    <AttributeInfo Name="TVM License Server" Type="String" DefaultValue="" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="TVM MA Name" Type="String" DefaultValue="" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Number of Ports" Type="Numeric" DefaultValue="0" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
+    <AttributeInfo Name="Ports Logical Names" Type="String" DefaultValue="" IsReadOnly="false">
+      <Rules />
+    </AttributeInfo>
     <AttributeInfo Name="Management Network" Type="String" DefaultValue="" Description="Select a network from the existing networks to be the Management Network." IsReadOnly="false">
       <Rules>
         <Rule Name="Configuration" />
@@ -210,31 +228,31 @@
       <Models>
         <ResourceModel Name="vCenter TeraVM Test Module" Description="" SupportsConcurrentCommands="false">
           <AttachedAttributes>
-            <AttachedAttribute Name="Auto Power On" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Auto Power On" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Refresh IP Timeout" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Refresh IP Timeout" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Wait for IP" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Wait for IP" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Auto Power Off" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Auto Power Off" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Auto Delete" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Auto Delete" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="TVM MA Name" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="TVM MA Name" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="vCenter Name" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="vCenter Name" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Number of Ports" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Number of Ports" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Ports Logical Names" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Ports Logical Names" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
           </AttachedAttributes>
@@ -256,28 +274,28 @@
         </ResourceModel>
         <ResourceModel Name="vCenter TeraVM Controller" Description="" SupportsConcurrentCommands="false">
           <AttachedAttributes>
-            <AttachedAttribute Name="TVM License Server" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="TVM License Server" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Wait for IP" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Wait for IP" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Refresh IP Timeout" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Refresh IP Timeout" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Auto Power On" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Auto Power On" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Auto Power Off" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Auto Power Off" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Auto Delete" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="Auto Delete" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="TVM MA Name" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="TVM MA Name" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="vCenter Name" IsOverridable="true" IsLocal="true">
+            <AttachedAttribute Name="vCenter Name" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
           </AttachedAttributes>
@@ -470,6 +488,7 @@
     <DriverDescriptor Name="TeraVM Management Assistant" Description="TeraVM Management Assistant" DriverType="PythonDriver" />
     <DriverDescriptor Name="TeraVM Controller" Description="TeraVM Controller" DriverType="PythonDriver" />
     <DriverDescriptor Name="Python Setup &amp; Teardown" Description="This driver is used for running Python scripts in the environment setup and teardown. To use this driver, make sure you select a suitable setup and/or teardown script." DriverType="TestShellDriver" />
+    <DriverDescriptor Name="Deploy TeraVM Instance" Description="Deploy TeraVM Instance" DriverType="PythonDriver" />
   </DriverDescriptors>
   <ScriptDescriptors>
     <ScriptDescriptor Name="Default Sandbox Setup" CategoryName="Hidden Commands" Version="1.0.28 " Alias="Setup script">

@@ -3,3 +3,5 @@ cloudshell-cli>=2.1,<2.2
 scp
 inject
 cloudshell-automation-api>=7.1.0,<7.2.0
+cloudshell-traffic-teravm>=1.0.0,<1.1.0
+cloudshell-cp-vcenter>=1.3.0,<1.4.0
