@@ -6,23 +6,23 @@
         <Attributes>
           <Attribute Name="CLI Connection Type" Value="SSH" />
           <Attribute Name="Password" Value="YsvV9ORJpYnYcSy5Lh1gYg==" />
-          <Attribute Name="TVM Executive Address" Value="192.168.65.22" />
+          <Attribute Name="TVM Executive Address" Value="" />
           <Attribute Name="User" Value="cli" />
         </Attributes>
       </AppResource>
     </AppResources>
     <DeploymentPaths>
-      <DeploymentPath Name="TeraVM Deploy" Default="true">
+      <DeploymentPath Name="TeraVM Deploy" Default="True">
         <DeploymentService Name="vCenter TeraVM Controller">
           <Attributes>
-            <Attribute Name="TVM License Server" Value="192.168.30.89" />
-            <Attribute Name="Wait for IP" Value="False" />
-            <Attribute Name="Refresh IP Timeout" Value="600" />
-            <Attribute Name="Auto Power On" Value="True" />
-            <Attribute Name="Auto Power Off" Value="True" />
-            <Attribute Name="Auto Delete" Value="True" />
-            <Attribute Name="TVM MA Name" Value="TVM Management Assistant" />
-            <Attribute Name="vCenter Name" Value="vCenter Cloud Provider" />
+            <Attribute Name="TVM License Server" Value="192.168.30.89" UserInput="True"/>
+            <Attribute Name="Wait for IP" Value="False" UserInput="True"/>
+            <Attribute Name="Refresh IP Timeout" Value="600" UserInput="True"/>
+            <Attribute Name="Auto Power On" Value="True" UserInput="True"/>
+            <Attribute Name="Auto Power Off" Value="True" UserInput="True"/>
+            <Attribute Name="Auto Delete" Value="True" UserInput="True"/>
+            <Attribute Name="TVM MA Name" Value="TVM Management Assistant" UserInput="True"/>
+            <Attribute Name="vCenter Name" Value="vCenter Cloud Provider" UserInput="True"/>
           </Attributes>
         </DeploymentService>
       </DeploymentPath>

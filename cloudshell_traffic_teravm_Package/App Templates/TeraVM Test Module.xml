@@ -4,24 +4,24 @@
     <AppResources>
       <AppResource ModelName="TeraVM Test Module" Driver="TeraVM Test Module">
         <Attributes>
-          <Attribute Name="TVM Executive Address" Value="192.168.65.22" />
+          <Attribute Name="TVM Executive Address" Value="" />
           <Attribute Name="TVM Test Module Type" Value="TVM-1" />
         </Attributes>
       </AppResource>
     </AppResources>
     <DeploymentPaths>
-      <DeploymentPath Name="vCenter TeraVM Test Module" Default="true">
+      <DeploymentPath Name="vCenter TeraVM Test Module" Default="True">
         <DeploymentService Name="vCenter TeraVM Test Module">
           <Attributes>
-            <Attribute Name="Auto Power On" Value="True" />
-            <Attribute Name="Refresh IP Timeout" Value="600" />
-            <Attribute Name="Wait for IP" Value="False" />
-            <Attribute Name="Auto Power Off" Value="True" />
-            <Attribute Name="Auto Delete" Value="True" />
-            <Attribute Name="TVM MA Name" Value="TVM Management Assistant" />
-            <Attribute Name="vCenter Name" Value="vCenter Cloud Provider" />
-            <Attribute Name="Number of Ports" Value="2" />
-            <Attribute Name="Ports Logical Names" Value="" />
+            <Attribute Name="Auto Power On" Value="True" UserInput="True"/>
+            <Attribute Name="Refresh IP Timeout" Value="600" UserInput="True"/>
+            <Attribute Name="Wait for IP" Value="False" UserInput="True"/>
+            <Attribute Name="Auto Power Off" Value="True" UserInput="True"/>
+            <Attribute Name="Auto Delete" Value="True" UserInput="True"/>
+            <Attribute Name="TVM MA Name" Value="TVM Management Assistant" UserInput="True"/>
+            <Attribute Name="vCenter Name" Value="vCenter Cloud Provider" UserInput="True"/>
+            <Attribute Name="Number of Ports" Value="2" UserInput="True"/>
+            <Attribute Name="Ports Logical Names" Value="" UserInput="True"/>
           </Attributes>
         </DeploymentService>
       </DeploymentPath>

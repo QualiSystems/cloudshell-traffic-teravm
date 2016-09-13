@@ -1,59 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DataModelInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.qualisystems.com/ResourceManagement/DataModelSchema.xsd">
   <Attributes>
-    <AttributeInfo Name="TVM License Server" Type="String" DefaultValue="" IsReadOnly="false" IsCommand="false">
-      <Rules>
-        <Rule Name="Configuration" />
-        <Rule Name="Setting" />
-      </Rules>
-    </AttributeInfo>
-    <AttributeInfo Name="Ports Logical Names" Type="String" DefaultValue="" IsReadOnly="false" IsCommand="false">
-      <Rules />
-    </AttributeInfo>
-    <AttributeInfo Name="Number of Ports" Type="Numeric" DefaultValue="0" IsReadOnly="false" IsCommand="false">
-      <Rules>
-        <Rule Name="Setting" />
-      </Rules>
-    </AttributeInfo>
-    <AttributeInfo Name="vCenter Name" Type="String" DefaultValue="" IsReadOnly="false" IsCommand="false">
-      <Rules>
-        <Rule Name="Configuration" />
-        <Rule Name="Setting" />
-      </Rules>
-    </AttributeInfo>
-    <AttributeInfo Name="TVM MA Name" Type="String" DefaultValue="" IsReadOnly="false" IsCommand="false">
-      <Rules />
-    </AttributeInfo>
-    <AttributeInfo Name="Wait for IP" Type="Boolean" DefaultValue="False" IsReadOnly="false" IsCommand="false">
-      <Rules>
-        <Rule Name="Configuration" />
-        <Rule Name="Setting" />
-      </Rules>
-    </AttributeInfo>
-    <AttributeInfo Name="Refresh IP Timeout" Type="Numeric" DefaultValue="600" IsReadOnly="false" IsCommand="false">
-      <Rules>
-        <Rule Name="Configuration" />
-        <Rule Name="Setting" />
-      </Rules>
-    </AttributeInfo>
-    <AttributeInfo Name="Auto Power On" Type="Boolean" DefaultValue="True" IsReadOnly="false" IsCommand="false">
-      <Rules>
-        <Rule Name="Configuration" />
-        <Rule Name="Setting" />
-      </Rules>
-    </AttributeInfo>
-    <AttributeInfo Name="Auto Power Off" Type="Boolean" DefaultValue="True" IsReadOnly="false" IsCommand="false">
-      <Rules>
-        <Rule Name="Configuration" />
-        <Rule Name="Setting" />
-      </Rules>
-    </AttributeInfo>
-    <AttributeInfo Name="Auto Delete" Type="Boolean" DefaultValue="True" IsReadOnly="false" IsCommand="false">
-      <Rules>
-        <Rule Name="Configuration" />
-        <Rule Name="Setting" />
-      </Rules>
-    </AttributeInfo>
     <AttributeInfo Name="Management Network" Type="String" DefaultValue="" Description="Select a network from the existing networks to be the Management Network." IsReadOnly="false">
       <Rules>
         <Rule Name="Configuration" />
@@ -186,7 +133,78 @@
     </AttributeInfo>
   </Attributes>
   <ResourceFamilies>
-    <ResourceFamily Description="" IsService="true" Name="Deployment Options" ServiceType="Deployment">
+    <ResourceFamily Name="Generic App Family" IsLockedByDefault="true" Description="" IsSearchable="true" ResourceType="Application">
+      <AttachedAttributes />
+      <AttributeValues />
+      <Models>
+        <ResourceModel Name="TeraVM Controller" Description="" SupportsConcurrentCommands="false">
+          <AttachedAttributes>
+            <AttachedAttribute Name="User" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="Password" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="CLI Connection Type" IsOverridable="true" IsLocal="true">
+              <AllowedValues>
+                <AllowedValue>SSH</AllowedValue>
+              </AllowedValues>
+            </AttachedAttribute>
+            <AttachedAttribute Name="TVM Executive Address" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+          </AttachedAttributes>
+          <AttributeValues>
+            <AttributeValue Name="User" Value="cli" />
+            <AttributeValue Name="Password" Value="q6/KiI8OvQpuAsgSL+pG8w==" />
+            <AttributeValue Name="CLI Connection Type" Value="SSH" />
+            <AttributeValue Name="TVM Executive Address" Value="" />
+          </AttributeValues>
+          <ParentModels />
+          <Drivers>
+            <DriverName>TeraVM Controller</DriverName>
+          </Drivers>
+          <Scripts />
+        </ResourceModel>
+        <ResourceModel Name="TeraVM Test Module" Description="" SupportsConcurrentCommands="false">
+          <AttachedAttributes>
+            <AttachedAttribute Name="TVM Executive Address" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+            <AttachedAttribute Name="TVM Test Module Type" IsOverridable="true" IsLocal="true">
+              <AllowedValues />
+            </AttachedAttribute>
+          </AttachedAttributes>
+          <AttributeValues>
+            <AttributeValue Name="TVM Executive Address" Value="" />
+            <AttributeValue Name="TVM Test Module Type" Value="TVM-1" />
+          </AttributeValues>
+          <ParentModels />
+          <Drivers>
+            <DriverName>TeraVM Test Module</DriverName>
+          </Drivers>
+          <Scripts />
+        </ResourceModel>
+      </Models>
+      <Categories />
+    </ResourceFamily>
+    <ResourceFamily Name="Apps Orchestration" Description="" IsService="true" ServiceType="Orchestration">
+      <AttachedAttributes />
+      <AttributeValues />
+      <Models>
+        <ResourceModel Name="Simple" Description="" SupportsConcurrentCommands="false">
+          <AttachedAttributes />
+          <AttributeValues />
+          <ParentModels />
+          <Drivers>
+            <DriverName>Deployment Orchestrator</DriverName>
+          </Drivers>
+          <Scripts />
+        </ResourceModel>
+      </Models>
+      <Categories />
+    </ResourceFamily>
+    <ResourceFamily Name="Deployment Options" Description="" IsService="true" ServiceType="Deployment">
       <AttachedAttributes />
       <AttributeValues />
       <Models>
@@ -277,79 +295,6 @@
           <Drivers>
             <DriverName>Deploy TeraVM Instance</DriverName>
           </Drivers>
-        </ResourceModel>
-       
-      </Models>
-      <Categories>
-      </Categories>
-    </ResourceFamily>
-    <ResourceFamily Name="Generic App Family" IsLockedByDefault="true" Description="" IsSearchable="true" ResourceType="Application">
-      <AttachedAttributes />
-      <AttributeValues />
-      <Models>
-        <ResourceModel Name="TeraVM Controller" Description="" SupportsConcurrentCommands="false">
-          <AttachedAttributes>
-            <AttachedAttribute Name="User" IsOverridable="true" IsLocal="true">
-              <AllowedValues />
-            </AttachedAttribute>
-            <AttachedAttribute Name="Password" IsOverridable="true" IsLocal="true">
-              <AllowedValues />
-            </AttachedAttribute>
-            <AttachedAttribute Name="CLI Connection Type" IsOverridable="true" IsLocal="true">
-              <AllowedValues>
-                <AllowedValue>SSH</AllowedValue>
-              </AllowedValues>
-            </AttachedAttribute>
-            <AttachedAttribute Name="TVM Executive Address" IsOverridable="true" IsLocal="true">
-              <AllowedValues />
-            </AttachedAttribute>
-          </AttachedAttributes>
-          <AttributeValues>
-            <AttributeValue Name="User" Value="cli" />
-            <AttributeValue Name="Password" Value="q6/KiI8OvQpuAsgSL+pG8w==" />
-            <AttributeValue Name="CLI Connection Type" Value="SSH" />
-            <AttributeValue Name="TVM Executive Address" Value="" />
-          </AttributeValues>
-          <ParentModels />
-          <Drivers>
-            <DriverName>TeraVM Controller</DriverName>
-          </Drivers>
-          <Scripts />
-        </ResourceModel>
-        <ResourceModel Name="TeraVM Test Module" Description="" SupportsConcurrentCommands="false">
-          <AttachedAttributes>
-            <AttachedAttribute Name="TVM Executive Address" IsOverridable="true" IsLocal="true">
-              <AllowedValues />
-            </AttachedAttribute>
-            <AttachedAttribute Name="TVM Test Module Type" IsOverridable="true" IsLocal="true">
-              <AllowedValues />
-            </AttachedAttribute>
-          </AttachedAttributes>
-          <AttributeValues>
-            <AttributeValue Name="TVM Executive Address" Value="" />
-            <AttributeValue Name="TVM Test Module Type" Value="TVM-1" />
-          </AttributeValues>
-          <ParentModels />
-          <Drivers>
-            <DriverName>TeraVM Test Module</DriverName>
-          </Drivers>
-          <Scripts />
-        </ResourceModel>
-      </Models>
-      <Categories />
-    </ResourceFamily>
-    <ResourceFamily Name="Apps Orchestration" Description="" IsService="true" ServiceType="Orchestration">
-      <AttachedAttributes />
-      <AttributeValues />
-      <Models>
-        <ResourceModel Name="Simple" Description="" SupportsConcurrentCommands="false">
-          <AttachedAttributes />
-          <AttributeValues />
-          <ParentModels />
-          <Drivers>
-            <DriverName>Deployment Orchestrator</DriverName>
-          </Drivers>
-          <Scripts />
         </ResourceModel>
       </Models>
       <Categories />
@@ -525,7 +470,6 @@
     <DriverDescriptor Name="TeraVM Management Assistant" Description="TeraVM Management Assistant" DriverType="PythonDriver" />
     <DriverDescriptor Name="TeraVM Controller" Description="TeraVM Controller" DriverType="PythonDriver" />
     <DriverDescriptor Name="Python Setup &amp; Teardown" Description="This driver is used for running Python scripts in the environment setup and teardown. To use this driver, make sure you select a suitable setup and/or teardown script." DriverType="TestShellDriver" />
-    <DriverDescriptor Name="Deploy TeraVM Instance" Description="Deploy TeraVm Instance" DriverType="PythonDriver" />
   </DriverDescriptors>
   <ScriptDescriptors>
     <ScriptDescriptor Name="Default Sandbox Setup" CategoryName="Hidden Commands" Version="1.0.28 " Alias="Setup script">
