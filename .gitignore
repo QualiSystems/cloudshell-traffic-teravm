@@ -6,8 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
-# zip files
-*.zip
+# bat files
+*.bat
 
 # Distribution / packaging
 .Python
@@ -15,6 +15,9 @@ env/
 build/
 develop-eggs/
 dist/
+package/dist
+cloudshell_traffic_teravm_Package/*.zip
+
 downloads/
 eggs/
 .eggs/

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ShellsConfiguration 
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://schemas.qualisystems.com/ResourceManagement/ShellsConfigurationSchema.xsd">
+<ResourceTemplates>
+    <ResourceTemplate Name="TeraVM Management Assistant" Model="TeraVM Management Assistant Model" Driver="TeraVM Management Assistant">
+        <Description>TeraVM Management Assistant deploys controllers and test modules to vCenter.</Description>
+        <AutoLoad Enable="false">
+            <Description/>
+        </AutoLoad>
+        <Attributes>
+            <Attribute Name="TVM Comms Default Network" Value="Dedicated vCenter Virtual Network For TeraVM vms" />
+            <Attribute Name="Default dvSwitch" Value="" />
+            <Attribute Name="VM Cluster" Value="eSXi HOST ADDRESS" />
+            <Attribute Name="VM Storage" Value="eSXi DATASTORE" />
+            <Attribute Name="Management Network" Value="Dedicated vCenter Virtual Network For TeraVM Management" />
+            <Attribute Name="VM Location" Value="vCenter FOLDER PATH FOR DEPLOYED TERAVM VMS" />
+            <Attribute Name="Holding Network" Value="HOLDING NETWORK FOR TEST MODULE NETWORK ADAPTERS" />
+            <Attribute Name="Default Datacenter" Value="DEFAULT DATACENTER ON VCENTER" />
+        </Attributes>
+    </ResourceTemplate>
+</ResourceTemplates>
+</ShellsConfiguration>

@@ -155,7 +155,7 @@
       <AttachedAttributes />
       <AttributeValues />
       <Models>
-        <ResourceModel Name="TeraVM Controller" Description="" SupportsConcurrentCommands="false">
+        <ResourceModel Name="TeraVM Controller" ImagePath="TeraVM Controller_Model.png" Description="" SupportsConcurrentCommands="false">
           <AttachedAttributes>
             <AttachedAttribute Name="User" IsOverridable="true" IsLocal="true">
               <AllowedValues />
@@ -184,7 +184,7 @@
           </Drivers>
           <Scripts />
         </ResourceModel>
-        <ResourceModel Name="TeraVM Test Module" Description="" SupportsConcurrentCommands="false">
+        <ResourceModel Name="TeraVM Test Module" ImagePath="TeraVM Test Module_Model.png" Description="" SupportsConcurrentCommands="false">
           <AttachedAttributes>
             <AttachedAttribute Name="TVM Executive Address" IsOverridable="true" IsLocal="true">
               <AllowedValues />
@@ -307,7 +307,7 @@
             <AttributeValue Name="Auto Delete" Value="False" />
             <AttributeValue Name="Refresh IP Timeout" Value="600" />
             <AttributeValue Name="Auto Power On" Value="False" />
-            <AttributeValue Name="TVM License Server" Value="192.168.30.89" />
+            <AttributeValue Name="TVM License Server" Value="TERAVM LICENSE SERVER IP ADDRESS" />
           </AttributeValues>
           <ParentModels />
           <Drivers>
@@ -410,7 +410,6 @@
       </AttachedAttributes>
       <AttributeValues>
         <AttributeValue Name="Management Network" Value="" />
-        <AttributeValue Name="TVM Executive Address" Value="" />
         <AttributeValue Name="VM Location" Value="" />
         <AttributeValue Name="Holding Network" Value="" />
         <AttributeValue Name="Default Datacenter" Value="" />
@@ -437,7 +436,6 @@
             <AttributeValue Name="VM Cluster" Value="" />
             <AttributeValue Name="VM Storage" Value="" />
             <AttributeValue Name="Management Network" Value="" />
-            <AttributeValue Name="TVM Executive Address" Value="" />
             <AttributeValue Name="VM Location" Value="" />
             <AttributeValue Name="Holding Network" Value="" />
             <AttributeValue Name="Default Datacenter" Value="" />

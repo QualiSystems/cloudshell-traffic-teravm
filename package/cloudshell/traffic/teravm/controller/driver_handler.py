@@ -76,7 +76,7 @@ class TVMControllerHandler:
         self._message('+ Stopped ' + CLOUDSHELL_TEST_CONFIGURATION, reservation_id, api)
 
     def run_custom_command(self, context, command_text):
-        self.cli.send_command(command_text)
+        return self.cli.send_command(command_text)
 
     @staticmethod
     def get_inventory(context):
@@ -116,7 +116,7 @@ class TVMControllerHandler:
         return file_name
 
     def _copy_test_group_file(self, modified_test_path):
-        self.cli.send_command('test -d {0}||mkdir qs_tests'.format(self.TVM_TEST_PATH))
+        self.cli.send_command('test -d {0}||mkdir {0}'.format(self.TVM_TEST_PATH))
         self.cli.send_file(modified_test_path, self.TVM_TEST_PATH)
         file_dir, file_name = os.path.split(modified_test_path)
         return file_name

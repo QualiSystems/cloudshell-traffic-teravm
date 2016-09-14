@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AppTemplateInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <AppResourceInfo Name="TeraVM Controller">
+  <AppResourceInfo Name="TeraVM Controller"  ImagePath="TeraVM Controller.png">
     <AppResources>
       <AppResource ModelName="TeraVM Controller" Driver="TeraVM Controller">
         <Attributes>
           <Attribute Name="CLI Connection Type" Value="SSH" />
-          <Attribute Name="Password" Value="YsvV9ORJpYnYcSy5Lh1gYg==" />
-          <Attribute Name="TVM Executive Address" Value="" />
+          <Attribute Name="Password" Value="q6/KiI8OvQpuAsgSL+pG8w==" />
+          <Attribute Name="TVM Executive Address" Value="TERAVM EXECUTIVE HOST ADDRESS" />
           <Attribute Name="User" Value="cli" />
         </Attributes>
       </AppResource>
@@ -15,14 +15,14 @@
       <DeploymentPath Name="TeraVM Deploy" Default="true">
         <DeploymentService Name="vCenter TeraVM Controller">
           <Attributes>
-            <Attribute Name="TVM License Server" Value="192.168.30.89" />
+            <Attribute Name="TVM License Server" Value="LICENSE SERVER IP ADDRESS" />
             <Attribute Name="Wait for IP" Value="False" />
             <Attribute Name="Refresh IP Timeout" Value="600" />
             <Attribute Name="Auto Power On" Value="True" />
             <Attribute Name="Auto Power Off" Value="True" />
             <Attribute Name="Auto Delete" Value="True" />
-            <Attribute Name="TVM MA Name" Value="TVM Management Assistant" />
-            <Attribute Name="vCenter Name" Value="vCenter Cloud Provider" />
+            <Attribute Name="TVM MA Name" Value="RESOURCE NAME OF TERAVM MANAGEMENT ASSISTANT" />
+            <Attribute Name="vCenter Name" Value="RESOURCE NAME OF VCENTER" />
           </Attributes>
         </DeploymentService>
       </DeploymentPath>

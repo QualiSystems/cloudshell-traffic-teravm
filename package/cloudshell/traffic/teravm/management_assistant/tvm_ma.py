@@ -45,6 +45,8 @@ class TeraVMManagementAssistantDriverHandler:
         deploy_output = ma.deploy(deployment_file_path)
 
         try:
+            if 'vim.fault.NoPermission' in deploy_output:
+                raise Exception('Could not deploy VM, vCenter permission fault')
             deployed_vm_name = re.findall('Calling Object: (.*) Action: PowerOnVM', deploy_output)[0]
         except IndexError:
             raise Exception(e.DEPLOYMENT_FAILED + deploy_output)

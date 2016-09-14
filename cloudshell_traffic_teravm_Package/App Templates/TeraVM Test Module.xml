@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AppTemplateInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <AppResourceInfo Name="TeraVM Test Module">
+  <AppResourceInfo Name="TeraVM Test Module" ImagePath="TeraVM Test Module.png">
     <AppResources>
       <AppResource ModelName="TeraVM Test Module" Driver="TeraVM Test Module">
         <Attributes>
-          <Attribute Name="TVM Executive Address" Value="" />
+          <Attribute Name="TVM Executive Address" Value="TERAVM EXECUTIVE HOST ADDRESS" />
           <Attribute Name="TVM Test Module Type" Value="TVM-1" />
         </Attributes>
       </AppResource>
@@ -18,8 +18,8 @@
             <Attribute Name="Wait for IP" Value="False" />
             <Attribute Name="Auto Power Off" Value="True" />
             <Attribute Name="Auto Delete" Value="True" />
-            <Attribute Name="TVM MA Name" Value="TVM Management Assistant" />
-            <Attribute Name="vCenter Name" Value="vCenter Cloud Provider" />
+            <Attribute Name="TVM MA Name" Value="RESOURCE NAME OF TERAVM MANAGEMENT ASSISTANT" />
+            <Attribute Name="vCenter Name" Value="RESOURCE NAME OF VCENTER" />
             <Attribute Name="Number of Ports" Value="2" />
             <Attribute Name="Ports Logical Names" Value="" />
           </Attributes>
