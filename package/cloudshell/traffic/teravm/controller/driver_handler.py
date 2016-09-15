@@ -232,7 +232,7 @@ class TVMControllerHandler:
         log_name = 'TeraVM_Controller_Configuration'
         logger = get_qs_logger(log_group=log_name, log_file_prefix=log_name)
         with open(temp_file_path, 'r') as f:
-            logger.info(msg=f.read)
+            logger.info(msg=f.read())
         return temp_file_path
 
     def _generate_test_configuration_with_replaced_interfaces(self, test_file_path, ports):
