@@ -9,8 +9,6 @@ from cloudshell.api.cloudshell_api import SetConnectorRequest
 from cloudshell.traffic.teravm.common.parsing_utilities import to_int_or_maxint
 from cloudshell.traffic.teravm.common.vsphere_helper import get_vsphere_credentials
 
-from debug_utils import debugger
-
 
 class TestModuleHandler:
     def __init__(self):
@@ -76,7 +74,6 @@ class TestModuleHandler:
         :type context: cloudshell.shell.core.driver_context.ResourceCommandContext
         :rtype: str
         """
-        debugger.attach_debugger()
         api = get_cloudshell_session(context, 'Global')
         resource_name = context.resource.fullname
         reservation_id = context.reservation.reservation_id
@@ -122,11 +119,12 @@ class TestModuleHandler:
             raise Exception('There were more connections to TeraVM than available interfaces after deployment.')
         else:
             for port in unallocated_ports:
-                connector = connectors_without_target.pop()
-                to_add.append(SetConnectorRequest(SourceResourceFullName=port.Name,
-                                                  TargetResourceFullName=connector.other,
-                                                  Direction=connector.direction,
-                                                  Alias=connector.alias))
+                if connectors_without_target:
+                    connector = connectors_without_target.pop()
+                    to_add.append(SetConnectorRequest(SourceResourceFullName=port.Name,
+                                                      TargetResourceFullName=connector.other,
+                                                      Direction=connector.direction,
+                                                      Alias=connector.alias))
 
         if connectors_without_target:
             raise Exception('There were more connections to TeraVM than available interfaces after deployment.')
