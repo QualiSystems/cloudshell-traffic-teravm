@@ -9,6 +9,8 @@ from cloudshell.api.cloudshell_api import SetConnectorRequest
 from cloudshell.traffic.teravm.common.parsing_utilities import to_int_or_maxint
 from cloudshell.traffic.teravm.common.vsphere_helper import get_vsphere_credentials
 
+from debug_utils import debugger
+
 
 class TestModuleHandler:
     def __init__(self):
@@ -74,6 +76,7 @@ class TestModuleHandler:
         :type context: cloudshell.shell.core.driver_context.ResourceCommandContext
         :rtype: str
         """
+        debugger.attach_debugger()
         api = get_cloudshell_session(context, 'Global')
         resource_name = context.resource.fullname
         reservation_id = context.reservation.reservation_id
