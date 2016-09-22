@@ -19,8 +19,7 @@ def cleanup(vm_resource):
             unregister_interfaces_in_pool_manager(resource_ids, tvm_e_address)
         return ''
     except ValueError:
-        raise Exception('No response from TeraVM Executive at {0}. \nCould not unregister {1} '
-                        'with mac {2}'.format(tvm_e_address, c.TEST_MODULE_MODEL, vm_resource.address))
+        print 'No response from TeraVM Executive at {0}. \nCould not unregister {1} with mac {2}'.format(tvm_e_address, c.TEST_MODULE_MODEL, vm_resource.address)
 
 
 def _is_mac(candidate):
