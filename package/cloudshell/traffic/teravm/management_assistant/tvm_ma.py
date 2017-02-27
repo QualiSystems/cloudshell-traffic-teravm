@@ -59,7 +59,7 @@ class TeraVMManagementAssistantDriverHandler:
         vm = vsphere.find_vm_by_name(si, app_request.vcenter_default_datacenter, deployed_vm_name)
 
         app = json.dumps({
-            'vm_name': deployed_vm_name,
+            'vm_name': deployed_vm_name + '_' + vm.config.uuid[-8:],
             'vm_uuid': vm.config.uuid,
             c.KEY_STARTING_INDEX: starting_index,
             c.KEY_INDEX_POOL: pool_id
