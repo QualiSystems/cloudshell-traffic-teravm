@@ -5,6 +5,7 @@ from cloudshell.traffic.teravm.common.cloudshell_helper import get_cloudshell_se
 from cloudshell.traffic.teravm.models.tvm_request import TvmAppRequest
 from cloudshell.traffic.teravm.common.parsing_utilities import lowercase_and_underscores
 from cloudshell.traffic.teravm.common import i18n as c
+from cloudshell.traffic.teravm.models.tvm_request import AppDetails
 
 
 class AppDeploymentHandler:
@@ -32,7 +33,7 @@ class AppDeploymentHandler:
         app = {
             'vm_name': deployed_vm['vm_name'],
             'vm_uuid': deployed_vm['vm_uuid'],
-            'cloud_provider_resource_name': context.resource.attributes.pop('vCenter Name', None),
+            'cloud_provider_resource_name': AppDetails.get_vcenter_name(context.resource),
         }
 
         # {'Refresh IP Timeout': '600', 'Auto Power On': 'False', 'Auto Delete': 'False', 'Wait for IP': 'False',

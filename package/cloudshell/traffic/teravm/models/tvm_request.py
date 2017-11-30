@@ -1,5 +1,7 @@
 import json
 
+import jsonpickle
+
 from cloudshell.traffic.teravm.common import i18n as c, error_messages
 
 
@@ -104,8 +106,21 @@ class AppDetails:
         return json.loads(deployment.app_context.app_request_json)['name']
 
     @staticmethod
+    def get_vcenter_name(deployment):
+
+        app_request = jsonpickle.decode(deployment.app_context.app_request_json)
+
+        cloud_provider_name = app_request["deploymentService"].get("cloudProviderName")
+        # Cloudshell >= v7.2 have no vCenter Name attribute, fill it from the cloudProviderName context attr
+        if cloud_provider_name:
+            vcenter_name = cloud_provider_name
+        else:
+            vcenter_name = deployment.attributes[c.ATTRIBUTE_NAME_VCENTER_NAME]
+        return vcenter_name
+
+    @staticmethod
     def _get_vcenter_attributes(api, deployment):
-        vcenter_name = deployment.attributes[c.ATTRIBUTE_NAME_VCENTER_NAME]
+        vcenter_name = AppDetails.get_vcenter_name(deployment)
         res = api.GetResourceDetails(vcenter_name)
         ra = res.ResourceAttributes
         result = {attribute.Name: attribute.Value for attribute in ra}
