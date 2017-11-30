@@ -17,7 +17,7 @@ develop-eggs/
 dist/
 package/dist
 cloudshell_traffic_teravm_Package/*.zip
-
+.idea/
 downloads/
 eggs/
 .eggs/
