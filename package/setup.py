@@ -7,9 +7,6 @@ with open(os.path.join('version.txt')) as version_file:
 with open('requirements.txt') as f_required:
     required = f_required.read().splitlines()
 
-with open('test_requirements.txt') as f_tests:
-    required_for_tests = f_tests.read().splitlines()
-
 setup(
         name="cloudshell-traffic-teravm",
         author="Quali",
@@ -17,7 +14,6 @@ setup(
         description="A repository for deploying and managing TeraVM controllers and test modules.",
         packages=find_packages(),
         test_suite='nose.collector',
-        test_requires=required_for_tests,
         package_data={'': ['*.txt']},
         install_requires=required,
         version=version_from_file,

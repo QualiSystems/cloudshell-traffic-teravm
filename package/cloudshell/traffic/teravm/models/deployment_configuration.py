@@ -42,7 +42,7 @@ class DeploymentConfiguration:
             'vmcOva': './ova/'
         }
 
-        if 'vm_prefix' in self._request:
+        if hasattr(self._request, 'vm_prefix'):
             self._config['vmcVmPrefix'] = self._request.vm_prefix
 
     def _build_test_module_config(self):

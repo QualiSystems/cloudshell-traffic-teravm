@@ -17,6 +17,8 @@ from cloudshell.traffic.teravm.common import i18n as c
 from cloudshell.traffic.teravm.controller.port_selector_helper import *
 from cloudshell.traffic.teravm.controller.teravm_executive_helper import *
 from cloudshell.core.logger.qs_logger import get_qs_logger
+from urllib2 import urlopen
+
 
 CLOUDSHELL_TEST_CONFIGURATION = 'CloudshellConfiguration'
 
@@ -302,20 +304,51 @@ def _get_test_controller_management_ip(vmuid, si, vsphere, timeout=120):
             raise Exception('Could not find controller management ip for controller ' + vmuid)
         try:
             vm = vsphere.get_vm_by_uuid(si, vmuid)
-            controller_management_ip = vm.guest.ipAddress
-            return controller_management_ip
+            if not vm:
+                raise Exception('vm was not found')
+            ips = get_ip_addresses(vm)
+            if ips:
+                controller_management_ip = ips[0]
+                return controller_management_ip
+            else:
+                continue
         except:
             print 'Waiting for controller management ip...'
             time.sleep(10)
 
+def get_ip_addresses(vm):
+    ips = []
+    if vm.guest.ipAddress:
+        ips.append(vm.guest.ipAddress)
+    for nic in vm.guest.net:
+        for addr in nic.ipAddress:
+            if addr:
+                ips.append(addr)
+    return ips
+
 
 def _controller_configured_with_license_server(controller_management_ip, license_server_ip):
+    lic_url_pre_version_13 = 'https://{0}/teraVM/postInstallConfiguration'.format(controller_management_ip)
+    lic_url_from_version_13 = 'http://{0}/controller_utilities/teraVM/postInstallConfiguration'.format(controller_management_ip)
+
+    lic_url = None
+    if url_exists(lic_url_from_version_13):
+        lic_url = lic_url_from_version_13
+    elif url_exists(lic_url_pre_version_13):
+        lic_url = lic_url_pre_version_13
+
+    if not lic_url:
+        return False
+
+    return check_if_license_server_ip_configured(lic_url, license_server_ip)
+
+
+def check_if_license_server_ip_configured(lic_url, license_server_ip):
     try:
-        lic_url = 'https://{0}/teraVM/postInstallConfiguration'.format(controller_management_ip)
         r = requests.get(lic_url, verify=False)
         return license_server_ip in r.content
-    except:
-        raise Exception('Was not able to access controller through HTTPS')
+    except Exception as e:
+        raise Exception('Was not able to access controller at {0} \n {1}'.format(lic_url, e.message))
 
 
 def _license_tvm_controller(controller_management_ip, license_server_ip):
@@ -329,3 +362,12 @@ def _license_tvm_controller(controller_management_ip, license_server_ip):
         print stdout.readlines()
         ssh.close()
 
+
+def url_exists(url):
+    try:
+        code = urlopen(url).code
+        if (code / 100 >= 4):
+            return False
+        return True
+    except:
+        return False
