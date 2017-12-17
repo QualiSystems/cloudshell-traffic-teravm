@@ -11,6 +11,11 @@
         <Rule Name="Setting" />
       </Rules>
     </AttributeInfo>
+    <AttributeInfo Name="VM Prefix" Type="String" DefaultValue="" IsReadOnly="false">
+      <Rules>
+        <Rule Name="Setting" />
+      </Rules>
+    </AttributeInfo>
     <AttributeInfo Name="Number of Ports" Type="Numeric" DefaultValue="0" IsReadOnly="false">
       <Rules>
         <Rule Name="Setting" />
@@ -298,6 +303,9 @@
             <AttachedAttribute Name="vCenter Name" IsOverridable="true" IsLocal="true" UserInput="true">
               <AllowedValues />
             </AttachedAttribute>
+            <AttachedAttribute Name="VM Prefix" IsOverridable="true" IsLocal="true" UserInput="true">
+              <AllowedValues />
+            </AttachedAttribute>
           </AttachedAttributes>
           <AttributeValues>
             <AttributeValue Name="Wait for IP" Value="False" />
@@ -308,6 +316,7 @@
             <AttributeValue Name="Refresh IP Timeout" Value="600" />
             <AttributeValue Name="Auto Power On" Value="False" />
             <AttributeValue Name="TVM License Server" Value="TERAVM LICENSE SERVER IP ADDRESS" />
+            <AttributeValue Name="VM Prefix" Value="" />
           </AttributeValues>
           <ParentModels />
           <Drivers>

@@ -97,3 +97,8 @@ ENV/
 # batches
 .cmd
 /.idea/
+/package/build/
+/.gitignore
+/.idea/cloudshell-traffic-teravm.iml
+/.idea/misc.xml
+/.idea/workspace.xml

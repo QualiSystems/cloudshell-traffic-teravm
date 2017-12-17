@@ -302,7 +302,7 @@ def _get_test_controller_management_ip(vmuid, si, vsphere, timeout=120):
             raise Exception('Could not find controller management ip for controller ' + vmuid)
         try:
             vm = vsphere.get_vm_by_uuid(si, vmuid)
-            controller_management_ip = vm.guest.net[1].ipAddress[0]
+            controller_management_ip = vm.guest.ipAddress
             return controller_management_ip
         except:
             print 'Waiting for controller management ip...'

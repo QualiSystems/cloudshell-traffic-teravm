@@ -1,14 +1,12 @@
 import json
 
-import jsonpickle
-
 from cloudshell.traffic.teravm.common import i18n as c, error_messages
 
 
 class TvmAppRequest:
     """ Gets attributes and other data about request from the deploying app """
     def __init__(self, vcenter_address, vcenter_user, vcenter_password, vcenter_default_datacenter, requested_model,
-                 number_of_interfaces=2, tvm_type=None, ports_logical_names=''):
+                 number_of_interfaces=2, tvm_type=None, ports_logical_names='', vm_prefix=''):
 
         self.vcenter_address = vcenter_address
         self.vcenter_user = vcenter_user
@@ -18,6 +16,7 @@ class TvmAppRequest:
         self.number_of_interfaces = number_of_interfaces
         self.tvm_type = tvm_type
         self.ports_logical_names = ports_logical_names
+        self.vm_prefix = vm_prefix
 
     @classmethod
     def from_context(cls, context, api):
@@ -64,7 +63,8 @@ class TvmAppRequest:
                    request_dict[c.KEY_MODEL],
                    request_dict[c.ATTRIBUTE_NAME_NUMBER_OF_PORTS],
                    request_dict[c.ATTRIBUTE_NAME_TVM_TYPE],
-                   request_dict[c.ATTRIBUTE_PORTS_LOGICAL_NAMES])
+                   request_dict[c.ATTRIBUTE_PORTS_LOGICAL_NAMES],
+                   request_dict[c.ATTRIBUTE_NAME_VM_PREFIX])
 
     def __str__(self):
         return json.dumps(self.to_dict())
@@ -81,7 +81,8 @@ class TvmAppRequest:
             c.KEY_MODEL: self.model,
             c.ATTRIBUTE_NAME_NUMBER_OF_PORTS: self.number_of_interfaces,
             c.ATTRIBUTE_NAME_TVM_TYPE: self.tvm_type,
-            c.ATTRIBUTE_PORTS_LOGICAL_NAMES: self.ports_logical_names
+            c.ATTRIBUTE_PORTS_LOGICAL_NAMES: self.ports_logical_names,
+            c.ATTRIBUTE_NAME_VM_PREFIX: self.vm_prefix
         }
 
 
@@ -106,21 +107,8 @@ class AppDetails:
         return json.loads(deployment.app_context.app_request_json)['name']
 
     @staticmethod
-    def get_vcenter_name(deployment):
-
-        app_request = jsonpickle.decode(deployment.app_context.app_request_json)
-
-        cloud_provider_name = app_request["deploymentService"].get("cloudProviderName")
-        # Cloudshell >= v7.2 have no vCenter Name attribute, fill it from the cloudProviderName context attr
-        if cloud_provider_name:
-            vcenter_name = cloud_provider_name
-        else:
-            vcenter_name = deployment.attributes[c.ATTRIBUTE_NAME_VCENTER_NAME]
-        return vcenter_name
-
-    @staticmethod
     def _get_vcenter_attributes(api, deployment):
-        vcenter_name = AppDetails.get_vcenter_name(deployment)
+        vcenter_name = deployment.attributes[c.ATTRIBUTE_NAME_VCENTER_NAME]
         res = api.GetResourceDetails(vcenter_name)
         ra = res.ResourceAttributes
         result = {attribute.Name: attribute.Value for attribute in ra}

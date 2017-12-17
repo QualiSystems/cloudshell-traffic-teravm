@@ -42,6 +42,9 @@ class DeploymentConfiguration:
             'vmcOva': './ova/'
         }
 
+        if 'vm_prefix' in self._request:
+            self._config['vmcVmPrefix'] = self._request.vm_prefix
+
     def _build_test_module_config(self):
         self._config = {
             'vmuTypes': self._request.tvm_type,

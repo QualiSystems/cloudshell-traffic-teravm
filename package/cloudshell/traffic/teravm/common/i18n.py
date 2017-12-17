@@ -27,6 +27,7 @@ ATTRIBUTE_SEQUENCE = 'Sequence'
 ATTRIBUTE_NAME_DVSWITCH = 'Default dvSwitch'
 ATTRIBUTE_NAME_NUMBER_OF_PORTS = 'Number of Ports'
 ATTRIBUTE_PORTS_LOGICAL_NAMES = 'Ports Logical Names'
+ATTRIBUTE_NAME_VM_PREFIX = 'VM Prefix'
 
 # ----------------- DICT KEYS --------------------#
 
