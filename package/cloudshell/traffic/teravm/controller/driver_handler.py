@@ -19,7 +19,6 @@ from cloudshell.traffic.teravm.controller.teravm_executive_helper import *
 from cloudshell.core.logger.qs_logger import get_qs_logger
 from urllib2 import urlopen
 
-
 CLOUDSHELL_TEST_CONFIGURATION = 'CloudshellConfiguration'
 
 
@@ -107,10 +106,10 @@ class TVMControllerHandler:
         self._message('Started ' + test_name, reservation_id, api)
 
     def _import_test_group(self, file_name, user_name, reservation_id, api):
-            self.cli.send_command(
-                'cli -u {0} importTestGroup // {1}/{2}'.format(user_name, self.TVM_TEST_PATH, file_name)
-            )
-            self._message('+ Imported test group', reservation_id, api)
+        self.cli.send_command(
+            'cli -u {0} importTestGroup // {1}/{2}'.format(user_name, self.TVM_TEST_PATH, file_name)
+        )
+        self._message('+ Imported test group', reservation_id, api)
 
     def _prepare_test_group_file(self, test_path, interfaces, user_name, reservation_id, api):
         modified_test_path = self._generate_test_file_with_replaced_interfaces(test_path, interfaces)
@@ -282,6 +281,7 @@ class TVMControllerHandler:
     def _message(message, reservation_id, api):
         api.WriteMessageToReservationOutput(reservation_id, message)
 
+
 ###############################################
 ###############################################
 #              |    |    |                    #
@@ -306,15 +306,20 @@ def _get_test_controller_management_ip(vmuid, si, vsphere, timeout=120):
             vm = vsphere.get_vm_by_uuid(si, vmuid)
             if not vm:
                 raise Exception('vm was not found')
-            ips = get_ip_addresses(vm)
+            ips = get_ip_address_for_nic(vm, c.MANAGEMENT_NETWORK_NIC_SLOT_NUMBER)
             if ips:
-                controller_management_ip = ips[0]
-                return controller_management_ip
+                non_private_ips = [ip for ip in ips if '192.168' not in ip]
+                if not non_private_ips:
+                    time.sleep(10)
+                    continue
+                return non_private_ips[0]
             else:
+                time.sleep(10)
                 continue
         except:
             print 'Waiting for controller management ip...'
             time.sleep(10)
+
 
 def get_ip_addresses(vm):
     ips = []
@@ -327,9 +332,19 @@ def get_ip_addresses(vm):
     return ips
 
 
+def get_ip_address_for_nic(vm, slot_number):
+    ips = []
+    for idx, nic in enumerate(vm.guest.net):
+        for addr in nic.ipAddress:
+            if idx == slot_number and addr:
+                ips.append(addr)
+    return ips
+
+
 def _controller_configured_with_license_server(controller_management_ip, license_server_ip):
     lic_url_pre_version_13 = 'https://{0}/teraVM/postInstallConfiguration'.format(controller_management_ip)
-    lic_url_from_version_13 = 'http://{0}/controller_utilities/teraVM/postInstallConfiguration'.format(controller_management_ip)
+    lic_url_from_version_13 = 'http://{0}/controller_utilities/teraVM/postInstallConfiguration'.format(
+        controller_management_ip)
 
     lic_url = None
     if url_exists(lic_url_from_version_13):
@@ -352,15 +367,15 @@ def check_if_license_server_ip_configured(lic_url, license_server_ip):
 
 
 def _license_tvm_controller(controller_management_ip, license_server_ip):
-        ssh = paramiko.SSHClient()
-        ssh.load_system_host_keys()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(hostname=controller_management_ip, username=c.CONTROLLER_SSH_USER,
-                    password=c.CONTROLLER_SSH_PASSWORD)
-        stdin, stdout, stderr = ssh.exec_command(str.format(
-            'cli configureTvmLicensing LicenseServer {0} {1} {2}', license_server_ip, '5053', '5054'))
-        print stdout.readlines()
-        ssh.close()
+    ssh = paramiko.SSHClient()
+    ssh.load_system_host_keys()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(hostname=controller_management_ip, username=c.CONTROLLER_SSH_USER,
+                password=c.CONTROLLER_SSH_PASSWORD)
+    stdin, stdout, stderr = ssh.exec_command(str.format(
+        'cli configureTvmLicensing LicenseServer {0} {1} {2}', license_server_ip, '5053', '5054'))
+    print stdout.readlines()
+    ssh.close()
 
 
 def url_exists(url):

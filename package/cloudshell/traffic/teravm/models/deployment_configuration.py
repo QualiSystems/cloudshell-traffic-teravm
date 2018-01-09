@@ -36,7 +36,7 @@ class DeploymentConfiguration:
             'vmcPassword': self._request.vcenter_password,
             'vmcHost[0]': self._tvmma.esxi_host,
             'vmcDatastore[0]': self._tvmma.datastore,
-            'vmcNetsByNic[1]': self._tvmma.management_network,
+            'vmcNetsByNic[{0}]'.format(str(i18n.MANAGEMENT_NETWORK_NIC_SLOT_NUMBER)): self._tvmma.management_network,
             'vmcNetsByNic[0]': self._tvmma.comms_network,
             'vmcStartIndex': self._starting_index,
             'vmcOva': './ova/'

@@ -54,3 +54,6 @@ INTERFACE = 'Interface '
 # ------------- TVM CREDENTIALS ------------------#
 CONTROLLER_SSH_USER = 'cli'
 CONTROLLER_SSH_PASSWORD = 'diversifEye'
+
+
+MANAGEMENT_NETWORK_NIC_SLOT_NUMBER = 1
