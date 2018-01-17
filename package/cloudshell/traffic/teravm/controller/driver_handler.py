@@ -95,8 +95,12 @@ class TVMControllerHandler:
         controller_ip = _get_test_controller_management_ip(vmuid, si, vsphere)
         api.UpdateResourceAddress(resource.Name, controller_ip)
 
+        timeout = time.time() + 60*10  # 10 minutes from now
         while not _controller_configured_with_license_server(controller_ip, license_server_ip):
+            if time.time()>timeout:
+                raise Exception("Failed to configure controller with license server in a timely fashion")
             _license_tvm_controller(controller_ip, license_server_ip)
+            time.sleep(1)
 
         api.SetResourceLiveStatus(resource.Name, 'Online', 'Active')
         return AutoLoadDetails([], [])
